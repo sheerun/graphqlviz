@@ -1,0 +1,183 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "ellipse"
+];
+edge [
+];
+Root [label="Root | allFilms: FilmsConnection | film: Film | allPeople: PeopleConnection | person: Person | allPlanets: PlanetsConnection | planet: Planet | allSpecies: SpeciesConnection | species: Species | allStarships: StarshipsConnection | starship: Starship | allVehicles: VehiclesConnection | vehicle: Vehicle | node: Node" shape="record"];
+FilmsConnection [label="FilmsConnection | pageInfo: PageInfo | edges: [FilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
+Film [label="Film | title: String | episodeID: Int | openingCrawl: String | director: String | producers: [String] | releaseDate: String | speciesConnection: FilmSpeciesConnection | starshipConnection: FilmStarshipsConnection | vehicleConnection: FilmVehiclesConnection | characterConnection: FilmCharactersConnection | planetConnection: FilmPlanetsConnection | created: String | edited: String | id: ID" shape="record"];
+PeopleConnection [label="PeopleConnection | pageInfo: PageInfo | edges: [PeopleEdge] | totalCount: Int | people: [Person]" shape="record"];
+Person [label="Person | name: String | birthYear: String | eyeColor: String | gender: String | hairColor: String | height: Int | mass: Int | skinColor: String | homeworld: Planet | filmConnection: PersonFilmsConnection | species: Species | starshipConnection: PersonStarshipsConnection | vehicleConnection: PersonVehiclesConnection | created: String | edited: String | id: ID" shape="record"];
+PlanetsConnection [label="PlanetsConnection | pageInfo: PageInfo | edges: [PlanetsEdge] | totalCount: Int | planets: [Planet]" shape="record"];
+Planet [label="Planet | name: String | diameter: Int | rotationPeriod: Int | orbitalPeriod: Int | gravity: String | population: Int | climates: [String] | terrains: [String] | surfaceWater: Float | residentConnection: PlanetResidentsConnection | filmConnection: PlanetFilmsConnection | created: String | edited: String | id: ID" shape="record"];
+SpeciesConnection [label="SpeciesConnection | pageInfo: PageInfo | edges: [SpeciesEdge] | totalCount: Int | species: [Species]" shape="record"];
+Species [label="Species | name: String | classification: String | designation: String | averageHeight: Float | averageLifespan: Int | eyeColors: [String] | hairColors: [String] | skinColors: [String] | language: String | homeworld: Planet | personConnection: SpeciesPeopleConnection | filmConnection: SpeciesFilmsConnection | created: String | edited: String | id: ID" shape="record"];
+StarshipsConnection [label="StarshipsConnection | pageInfo: PageInfo | edges: [StarshipsEdge] | totalCount: Int | starships: [Starship]" shape="record"];
+Starship [label="Starship | name: String | model: String | starshipClass: String | manufacturers: [String] | costInCredits: Float | length: Float | crew: String | passengers: String | maxAtmospheringSpeed: Int | hyperdriveRating: Float | MGLT: Int | cargoCapacity: Float | consumables: String | pilotConnection: StarshipPilotsConnection | filmConnection: StarshipFilmsConnection | created: String | edited: String | id: ID" shape="record"];
+VehiclesConnection [label="VehiclesConnection | pageInfo: PageInfo | edges: [VehiclesEdge] | totalCount: Int | vehicles: [Vehicle]" shape="record"];
+Vehicle [label="Vehicle | name: String | model: String | vehicleClass: String | manufacturers: [String] | costInCredits: Int | length: Float | crew: String | passengers: String | maxAtmospheringSpeed: Int | cargoCapacity: Int | consumables: String | pilotConnection: VehiclePilotsConnection | filmConnection: VehicleFilmsConnection | created: String | edited: String | id: ID" shape="record"];
+PageInfo [label="PageInfo | hasNextPage: Boolean | hasPreviousPage: Boolean | startCursor: String | endCursor: String" shape="record"];
+FilmsEdge [label="FilmsEdge | node: Film | cursor: String" shape="record"];
+FilmSpeciesConnection [label="FilmSpeciesConnection | pageInfo: PageInfo | edges: [FilmSpeciesEdge] | totalCount: Int | species: [Species]" shape="record"];
+FilmStarshipsConnection [label="FilmStarshipsConnection | pageInfo: PageInfo | edges: [FilmStarshipsEdge] | totalCount: Int | starships: [Starship]" shape="record"];
+FilmVehiclesConnection [label="FilmVehiclesConnection | pageInfo: PageInfo | edges: [FilmVehiclesEdge] | totalCount: Int | vehicles: [Vehicle]" shape="record"];
+FilmCharactersConnection [label="FilmCharactersConnection | pageInfo: PageInfo | edges: [FilmCharactersEdge] | totalCount: Int | characters: [Person]" shape="record"];
+FilmPlanetsConnection [label="FilmPlanetsConnection | pageInfo: PageInfo | edges: [FilmPlanetsEdge] | totalCount: Int | planets: [Planet]" shape="record"];
+PeopleEdge [label="PeopleEdge | node: Person | cursor: String" shape="record"];
+PersonFilmsConnection [label="PersonFilmsConnection | pageInfo: PageInfo | edges: [PersonFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
+PersonStarshipsConnection [label="PersonStarshipsConnection | pageInfo: PageInfo | edges: [PersonStarshipsEdge] | totalCount: Int | starships: [Starship]" shape="record"];
+PersonVehiclesConnection [label="PersonVehiclesConnection | pageInfo: PageInfo | edges: [PersonVehiclesEdge] | totalCount: Int | vehicles: [Vehicle]" shape="record"];
+PlanetsEdge [label="PlanetsEdge | node: Planet | cursor: String" shape="record"];
+PlanetResidentsConnection [label="PlanetResidentsConnection | pageInfo: PageInfo | edges: [PlanetResidentsEdge] | totalCount: Int | residents: [Person]" shape="record"];
+PlanetFilmsConnection [label="PlanetFilmsConnection | pageInfo: PageInfo | edges: [PlanetFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
+SpeciesEdge [label="SpeciesEdge | node: Species | cursor: String" shape="record"];
+SpeciesPeopleConnection [label="SpeciesPeopleConnection | pageInfo: PageInfo | edges: [SpeciesPeopleEdge] | totalCount: Int | people: [Person]" shape="record"];
+SpeciesFilmsConnection [label="SpeciesFilmsConnection | pageInfo: PageInfo | edges: [SpeciesFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
+StarshipsEdge [label="StarshipsEdge | node: Starship | cursor: String" shape="record"];
+StarshipPilotsConnection [label="StarshipPilotsConnection | pageInfo: PageInfo | edges: [StarshipPilotsEdge] | totalCount: Int | pilots: [Person]" shape="record"];
+StarshipFilmsConnection [label="StarshipFilmsConnection | pageInfo: PageInfo | edges: [StarshipFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
+VehiclesEdge [label="VehiclesEdge | node: Vehicle | cursor: String" shape="record"];
+VehiclePilotsConnection [label="VehiclePilotsConnection | pageInfo: PageInfo | edges: [VehiclePilotsEdge] | totalCount: Int | pilots: [Person]" shape="record"];
+VehicleFilmsConnection [label="VehicleFilmsConnection | pageInfo: PageInfo | edges: [VehicleFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
+FilmSpeciesEdge [label="FilmSpeciesEdge | node: Species | cursor: String" shape="record"];
+FilmStarshipsEdge [label="FilmStarshipsEdge | node: Starship | cursor: String" shape="record"];
+FilmVehiclesEdge [label="FilmVehiclesEdge | node: Vehicle | cursor: String" shape="record"];
+FilmCharactersEdge [label="FilmCharactersEdge | node: Person | cursor: String" shape="record"];
+FilmPlanetsEdge [label="FilmPlanetsEdge | node: Planet | cursor: String" shape="record"];
+PersonFilmsEdge [label="PersonFilmsEdge | node: Film | cursor: String" shape="record"];
+PersonStarshipsEdge [label="PersonStarshipsEdge | node: Starship | cursor: String" shape="record"];
+PersonVehiclesEdge [label="PersonVehiclesEdge | node: Vehicle | cursor: String" shape="record"];
+PlanetResidentsEdge [label="PlanetResidentsEdge | node: Person | cursor: String" shape="record"];
+PlanetFilmsEdge [label="PlanetFilmsEdge | node: Film | cursor: String" shape="record"];
+SpeciesPeopleEdge [label="SpeciesPeopleEdge | node: Person | cursor: String" shape="record"];
+SpeciesFilmsEdge [label="SpeciesFilmsEdge | node: Film | cursor: String" shape="record"];
+StarshipPilotsEdge [label="StarshipPilotsEdge | node: Person | cursor: String" shape="record"];
+StarshipFilmsEdge [label="StarshipFilmsEdge | node: Film | cursor: String" shape="record"];
+VehiclePilotsEdge [label="VehiclePilotsEdge | node: Person | cursor: String" shape="record"];
+VehicleFilmsEdge [label="VehicleFilmsEdge | node: Film | cursor: String" shape="record"];
+
+Root -> FilmsConnection
+Root -> Film
+Root -> PeopleConnection
+Root -> Person
+Root -> PlanetsConnection
+Root -> Planet
+Root -> SpeciesConnection
+Root -> Species
+Root -> StarshipsConnection
+Root -> Starship
+Root -> VehiclesConnection
+Root -> Vehicle
+FilmsConnection -> PageInfo
+FilmsConnection -> FilmsEdge
+FilmsConnection -> Film
+Film -> FilmSpeciesConnection
+Film -> FilmStarshipsConnection
+Film -> FilmVehiclesConnection
+Film -> FilmCharactersConnection
+Film -> FilmPlanetsConnection
+PeopleConnection -> PageInfo
+PeopleConnection -> PeopleEdge
+PeopleConnection -> Person
+Person -> Planet
+Person -> PersonFilmsConnection
+Person -> Species
+Person -> PersonStarshipsConnection
+Person -> PersonVehiclesConnection
+PlanetsConnection -> PageInfo
+PlanetsConnection -> PlanetsEdge
+PlanetsConnection -> Planet
+Planet -> PlanetResidentsConnection
+Planet -> PlanetFilmsConnection
+SpeciesConnection -> PageInfo
+SpeciesConnection -> SpeciesEdge
+SpeciesConnection -> Species
+Species -> Planet
+Species -> SpeciesPeopleConnection
+Species -> SpeciesFilmsConnection
+StarshipsConnection -> PageInfo
+StarshipsConnection -> StarshipsEdge
+StarshipsConnection -> Starship
+Starship -> StarshipPilotsConnection
+Starship -> StarshipFilmsConnection
+VehiclesConnection -> PageInfo
+VehiclesConnection -> VehiclesEdge
+VehiclesConnection -> Vehicle
+Vehicle -> VehiclePilotsConnection
+Vehicle -> VehicleFilmsConnection
+FilmsEdge -> Film
+FilmSpeciesConnection -> PageInfo
+FilmSpeciesConnection -> FilmSpeciesEdge
+FilmSpeciesConnection -> Species
+FilmStarshipsConnection -> PageInfo
+FilmStarshipsConnection -> FilmStarshipsEdge
+FilmStarshipsConnection -> Starship
+FilmVehiclesConnection -> PageInfo
+FilmVehiclesConnection -> FilmVehiclesEdge
+FilmVehiclesConnection -> Vehicle
+FilmCharactersConnection -> PageInfo
+FilmCharactersConnection -> FilmCharactersEdge
+FilmCharactersConnection -> Person
+FilmPlanetsConnection -> PageInfo
+FilmPlanetsConnection -> FilmPlanetsEdge
+FilmPlanetsConnection -> Planet
+PeopleEdge -> Person
+PersonFilmsConnection -> PageInfo
+PersonFilmsConnection -> PersonFilmsEdge
+PersonFilmsConnection -> Film
+PersonStarshipsConnection -> PageInfo
+PersonStarshipsConnection -> PersonStarshipsEdge
+PersonStarshipsConnection -> Starship
+PersonVehiclesConnection -> PageInfo
+PersonVehiclesConnection -> PersonVehiclesEdge
+PersonVehiclesConnection -> Vehicle
+PlanetsEdge -> Planet
+PlanetResidentsConnection -> PageInfo
+PlanetResidentsConnection -> PlanetResidentsEdge
+PlanetResidentsConnection -> Person
+PlanetFilmsConnection -> PageInfo
+PlanetFilmsConnection -> PlanetFilmsEdge
+PlanetFilmsConnection -> Film
+SpeciesEdge -> Species
+SpeciesPeopleConnection -> PageInfo
+SpeciesPeopleConnection -> SpeciesPeopleEdge
+SpeciesPeopleConnection -> Person
+SpeciesFilmsConnection -> PageInfo
+SpeciesFilmsConnection -> SpeciesFilmsEdge
+SpeciesFilmsConnection -> Film
+StarshipsEdge -> Starship
+StarshipPilotsConnection -> PageInfo
+StarshipPilotsConnection -> StarshipPilotsEdge
+StarshipPilotsConnection -> Person
+StarshipFilmsConnection -> PageInfo
+StarshipFilmsConnection -> StarshipFilmsEdge
+StarshipFilmsConnection -> Film
+VehiclesEdge -> Vehicle
+VehiclePilotsConnection -> PageInfo
+VehiclePilotsConnection -> VehiclePilotsEdge
+VehiclePilotsConnection -> Person
+VehicleFilmsConnection -> PageInfo
+VehicleFilmsConnection -> VehicleFilmsEdge
+VehicleFilmsConnection -> Film
+FilmSpeciesEdge -> Species
+FilmStarshipsEdge -> Starship
+FilmVehiclesEdge -> Vehicle
+FilmCharactersEdge -> Person
+FilmPlanetsEdge -> Planet
+PersonFilmsEdge -> Film
+PersonStarshipsEdge -> Starship
+PersonVehiclesEdge -> Vehicle
+PlanetResidentsEdge -> Person
+PlanetFilmsEdge -> Film
+SpeciesPeopleEdge -> Person
+SpeciesFilmsEdge -> Film
+StarshipPilotsEdge -> Person
+StarshipFilmsEdge -> Film
+VehiclePilotsEdge -> Person
+VehicleFilmsEdge -> Film
+}

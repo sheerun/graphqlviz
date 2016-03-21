@@ -30,7 +30,6 @@
     "lodash": "^4.6.1",
     "get-stdin": "^5.0.1",
     "es6-promise": "~3.1.2",
-    "node-fetch": "~1.4.0",
     "isomorphic-fetch": "~2.2.1"
   },
   "devDependencies": {

@@ -1,0 +1,44 @@
+{
+  "name": "graphqlviz",
+  "version": "1.0.0",
+  "description": "GraphQL Server CLI visualizer",
+  "license": "MIT",
+  "repository": "sheerun/graphqlviz",
+  "author": {
+    "name": "Adam Stankiewicz",
+    "email": "sheerun@sher.pl",
+    "url": "sheerun.net"
+  },
+  "bin": "cli.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    ""
+  ],
+  "dependencies": {
+    "meow": "^3.7.0",
+    "lodash": "^4.6.1",
+    "get-stdin": "^5.0.1",
+    "es6-promise": "~3.1.2",
+    "node-fetch": "~1.4.0",
+    "isomorphic-fetch": "~2.2.1"
+  },
+  "devDependencies": {
+    "ava": "^0.13.0",
+    "xo": "^0.12.1"
+  },
+  "xo": {
+    "space": 2,
+    "semicolon": true
+  }
+}

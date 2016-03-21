@@ -11,9 +11,11 @@ $ npm install -g graphqlviz
 ```
 $ graphqlviz --help
 
+  GraphQL Server CLI visualizer
+
   Usage
     $ graphqlviz [url]
-        Renders schema in dot format from [url] endpoint
+        Renders dot schema from [url] endpoint
 
   Examples
     $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png

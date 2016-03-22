@@ -1,6 +1,6 @@
 # graphqlviz [![Build Status](https://travis-ci.org/sheerun/graphqlviz.svg?branch=master)](https://travis-ci.org/sheerun/graphqlviz)
 
-> GraphQL Server CLI visualizer. Adapted from original [web intrrface](https://github.com/NathanRSmith/graphql-visualizer).
+> GraphQL Server CLI visualizer. Adapted from original [web interface](https://github.com/NathanRSmith/graphql-visualizer).
 
 ![](demo.gif)
 

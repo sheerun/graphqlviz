@@ -28,4 +28,4 @@ $ graphqlviz --help
 
 ## License
 
-MIT © [Adam Stankiewicz](https://sheerun.net)
+MIT © [Nathan Smith](https://github.com/NathanRSmith), [Adam Stankiewicz](https://sheerun.net)

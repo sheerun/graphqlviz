@@ -2,6 +2,8 @@
 
 > GraphQL Server CLI visualizer
 
+![](demo.gif)
+
 ## CLI
 
 ```
@@ -18,7 +20,7 @@ $ graphqlviz --help
         Renders dot schema from [url] endpoint
 
   Examples
-    $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
+    $ graphqlviz http://localhost:3000 | dot -Tpng -o graph.png
     $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview
 
 ```

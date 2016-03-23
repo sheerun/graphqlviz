@@ -27,6 +27,6 @@ $ graphqlviz --help
 
 ## Team
 
-[![Adam Stankiewicz](https://avatars3.githubusercontent.com/u/292365?s=130)](https://sheerun.net) | [![Nathan Smith](https://avatars1.githubusercontent.com/u/1530197?s=130)](https://github.com/NathanRSmith)
+[![Adam Stankiewicz](https://avatars3.githubusercontent.com/u/292365?s=130)](https://sheerun.net) | [![Nathan Smith](https://avatars1.githubusercontent.com/u/1530197?s=130)](http://nathanrandal.com/)
 ---|---
-[Adam Stankiewicz](https://sheerun.net) | [Nathan Smith](https://github.com/NathanRSmith)
+[Adam Stankiewicz](https://sheerun.net) | [Nathan Smith](http://nathanrandal.com/)

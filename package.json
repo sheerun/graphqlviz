@@ -1,14 +1,16 @@
 {
   "name": "graphqlviz",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GraphQL Server CLI visualizer",
   "license": "MIT",
-  "repository": "sheerun/graphqlviz",
-  "author": {
-    "name": "Adam Stankiewicz",
-    "email": "sheerun@sher.pl",
-    "url": "sheerun.net"
+  "repository": "https://github.com/sheerun/graphqlviz.git",
+  "bugs": {
+    "url": "https://github.com/sheerun/graphqlviz/issues"
   },
+  "author": "Adam Stankiewicz <sheerun@sher.pl> (https://sheerun.net)",
+  "contributors": [
+    "Nathan Smith <nathanrandal@gmail.com> (https://github.com/NathanRSmith)"
+  ],
   "bin": "cli.js",
   "engines": {
     "node": ">=0.10.0"
@@ -21,9 +23,8 @@
     "cli.js"
   ],
   "keywords": [
-    "cli-app",
     "cli",
-    ""
+    "graphql"
   ],
   "dependencies": {
     "es6-promise": "~3.1.2",

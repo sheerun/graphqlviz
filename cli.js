@@ -33,9 +33,9 @@ var opts = {
 };
 
 function terminate() {
-  cli.showHelp()
-  // console.error(cli.help);
-  // process.exit(1);
+  // cli.showHelp();
+  console.error(cli.help);
+  process.exit(1);
 }
 
 if (cli.input[0] === 'query') {

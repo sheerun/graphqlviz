@@ -17,9 +17,15 @@ var cli = meow([
   ' '
 ], {
   alias: {
-    v: 'verbose'
+    v: 'verbose',
+    a: 'noargs'
   }
 });
+
+// build render options
+var opts = {
+  noargs: cli.flags.noargs
+};
 
 function terminate() {
   console.error(cli.help);
@@ -35,9 +41,10 @@ if (cli.input[0] === 'query') {
     }
 
     try {
-      console.log(graphqlviz.render(stdin));
+      console.log(graphqlviz.render(stdin, opts));
     } catch (e) {
       console.error('Invalid introspection result on stdin. Use --verbose flag to see it.');
+      console.error('Error: ' + e.message);
 
       if (cli.flags.verbose) {
         console.error(stdin);
@@ -76,7 +83,7 @@ if (cli.input[0] === 'query') {
     }
 
     try {
-      console.log(graphqlviz.render(json));
+      console.log(graphqlviz.render(json, opts));
     } catch (e) {
       console.error('Invalid introspection result. Use --verbose flag to see output.');
 

@@ -5,7 +5,7 @@ var _ = require('lodash');
 var graphql = require('graphql');
 
 module.exports.query = graphql.introspectionQuery;
-console.log(module.exports.query);
+// console.log(module.exports.query);
 
 // process a graphql type object
 // returns simplified version of the type
@@ -16,6 +16,7 @@ function processType(item, entities, types) {
     var obj = {};
     obj.name = field.name;
 
+    // process field type
     if (field.type.ofType) {
       obj.type = field.type.ofType.name;
       obj.isObjectType = field.type.ofType.kind === 'OBJECT';
@@ -23,6 +24,21 @@ function processType(item, entities, types) {
     } else {
       obj.type = field.type.name;
       obj.isObjectType = field.type.kind === 'OBJECT';
+    }
+
+    // process args
+    if (field.args && field.args.length) {
+      obj.args = _.map(field.args, function (arg) {
+        var obj = {};
+        obj.name = arg.name;
+        if (arg.type.ofType) {
+          obj.type = arg.type.ofType.name;
+          obj.isRequired = arg.type.ofType.kind === 'NON_NULL';
+        } else {
+          obj.type = arg.type.name;
+        }
+        return obj;
+      });
     }
 
     return obj;
@@ -71,7 +87,9 @@ function walkBFS(obj, iter) {
   }
 }
 
-module.exports.render = function (schema) {
+module.exports.render = function (schema, opts) {
+  opts = opts || {};
+
   if (_.isString(schema)) {
     schema = JSON.parse(schema);
   }
@@ -129,7 +147,16 @@ module.exports.render = function (schema) {
   // nodes
   dotfile += _.map(entities, function (v) {
     var rows = _.map(v.fields, function (v) {
-      return v.name + ': ' + (v.isList ? '[' + v.type + ']' : v.type);
+      var str = v.name;
+
+      // render args if desired & present
+      if (!opts.noargs && v.args && v.args.length) {
+        str += '(' + _.map(v.args, function (v) {
+          return v.name + ':' + v.type;
+        }).join(', ') + ')';
+      }
+
+      return str + ': ' + (v.isList ? '[' + v.type + ']' : v.type);
     });
     rows.unshift(v.name);
 

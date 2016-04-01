@@ -7,6 +7,10 @@ var getStdin = require('get-stdin');
 var graphqlviz = require('./');
 
 var cli = meow([
+  'Options:',
+  '  -a, --noargs     render without field arguments',
+  '  -v, --verbose    print introspection result',
+  '',
   'Usage',
   '  $ graphqlviz [url]',
   '      Renders dot schema from [url] endpoint',
@@ -14,6 +18,7 @@ var cli = meow([
   'Examples',
   '  $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png',
   '  $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview',
+  '  $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview',
   ' '
 ], {
   alias: {
@@ -28,8 +33,9 @@ var opts = {
 };
 
 function terminate() {
-  console.error(cli.help);
-  process.exit(1);
+  cli.showHelp()
+  // console.error(cli.help);
+  // process.exit(1);
 }
 
 if (cli.input[0] === 'query') {

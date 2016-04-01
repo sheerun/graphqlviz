@@ -15,13 +15,18 @@ $ graphqlviz --help
 
   GraphQL Server CLI visualizer
 
+  Options:
+    -a, --noargs     render without field arguments
+    -v, --verbose    print introspection result
+
   Usage
     $ graphqlviz [url]
         Renders dot schema from [url] endpoint
 
   Examples
-    $ graphqlviz http://localhost:3000 | dot -Tpng -o graph.png
+    $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
     $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview
+    $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview
 
 ```
 

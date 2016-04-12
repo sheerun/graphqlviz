@@ -15,6 +15,8 @@ function processType(item, entities, types) {
   var fields = _.map(type.fields, function (field) {
     var obj = {};
     obj.name = field.name;
+    obj.isDeprecated = field.isDeprecated;
+    obj.deprecationReason = field.deprecationReason;
 
     // process field type
     if (field.type.ofType) {
@@ -155,8 +157,13 @@ module.exports.render = function (schema, opts) {
           return v.name + ':' + v.type;
         }).join(', ') + ')';
       }
-
-      return str + ': ' + (v.isList ? '[' + v.type + ']' : v.type);
+      var deprecationReason = '';
+      if(v.isDeprecated) {
+        deprecationReason = ' <FONT color="red">';
+        deprecationReason += (v.deprecationReason ? v.deprecationReason : 'Deprecated');
+        deprecationReason += '</FONT>';
+      }
+      return str + ': ' + (v.isList ? '[' + v.type + ']' : v.type) + deprecationReason;
     });
     rows.unshift("<B>" + v.name + "</B>");
 

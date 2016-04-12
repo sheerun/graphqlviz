@@ -158,9 +158,9 @@ module.exports.render = function (schema, opts) {
 
       return str + ': ' + (v.isList ? '[' + v.type + ']' : v.type);
     });
-    rows.unshift(v.name);
+    rows.unshift("<B>" + v.name + "</B>");
 
-    return v.name + ' [label="' + rows.join(' | ') + '" shape="record"];';
+    return v.name + ' [label=<' + rows.join(' | ') + '> shape="record"];';
   }).join('\n');
 
   dotfile += '\n\n';

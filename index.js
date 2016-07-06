@@ -15,6 +15,8 @@ function processType(item, entities, types) {
   var fields = _.map(type.fields, function (field) {
     var obj = {};
     obj.name = field.name;
+    obj.isDeprecated = field.isDeprecated;
+    obj.deprecationReason = field.deprecationReason;
 
     // process field type
     if (field.type.ofType) {
@@ -139,7 +141,7 @@ module.exports.render = function (schema, opts) {
     '];\n' +
     'node [\n' +
     '  fontsize = "16"\n' +
-    '  shape = "ellipse"\n' +
+    '  shape = "plaintext"\n' +
     '];\n' +
     'edge [\n' +
     '];\n';
@@ -155,12 +157,27 @@ module.exports.render = function (schema, opts) {
           return v.name + ':' + v.type;
         }).join(', ') + ')';
       }
-
-      return str + ': ' + (v.isList ? '[' + v.type + ']' : v.type);
+      var deprecationReason = '';
+      if(v.isDeprecated) {
+        deprecationReason = ' <FONT color="red">';
+        deprecationReason += (v.deprecationReason ? v.deprecationReason : 'Deprecated');
+        deprecationReason += '</FONT>';
+      }
+      return {
+        text: str + ': ' + (v.isList ? '[' + v.type + ']' : v.type) + deprecationReason,
+        name: v.name + 'port',
+      }
     });
-    rows.unshift(v.name);
-
-    return v.name + ' [label="' + rows.join(' | ') + '" shape="record"];';
+    // rows.unshift("<B>" + v.name + "</B>");
+    var result = v.name + ' ';
+    result += '[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">';
+    result += '<TR><TD><B>' + v.name + '</B></TD></TR>';
+    result += rows.map(function(row) {
+      return '<TR><TD PORT="' + row.name + '">' + row.text + '</TD></TR>';
+    });
+    result += '</TABLE>>];'
+    return result;
+  //  return v.name + ' [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD>' + rows.join('</TD></TR><TR><TD>') + '</TD></TR></TABLE>>];';
   }).join('\n');
 
   dotfile += '\n\n';
@@ -173,7 +190,7 @@ module.exports.render = function (schema, opts) {
         return;
       }
 
-      a.push(v.name + ' -> ' + f.type);
+      a.push(v.name + ':' + f.name + 'port' + ' -> ' + f.type);
     });
 
     return a;

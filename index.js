@@ -158,24 +158,24 @@ module.exports.render = function (schema, opts) {
         }).join(', ') + ')';
       }
       var deprecationReason = '';
-      if(v.isDeprecated) {
+      if (v.isDeprecated) {
         deprecationReason = ' <FONT color="red">';
         deprecationReason += (v.deprecationReason ? v.deprecationReason : 'Deprecated');
         deprecationReason += '</FONT>';
       }
       return {
         text: str + ': ' + (v.isList ? '[' + v.type + ']' : v.type) + deprecationReason,
-        name: v.name + 'port',
-      }
+        name: v.name + 'port'
+      };
     });
     // rows.unshift("<B>" + v.name + "</B>");
     var result = v.name + ' ';
     result += '[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">';
     result += '<TR><TD><B>' + v.name + '</B></TD></TR>';
-    result += rows.map(function(row) {
+    result += rows.map(function (row) {
       return '<TR><TD PORT="' + row.name + '">' + row.text + '</TD></TR>';
     });
-    result += '</TABLE>>];'
+    result += '</TABLE>>];';
     return result;
   //  return v.name + ' [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD>' + rows.join('</TD></TR><TR><TD>') + '</TD></TR></TABLE>>];';
   }).join('\n');
@@ -190,7 +190,7 @@ module.exports.render = function (schema, opts) {
         return;
       }
 
-      a.push(v.name + ':' + f.name + 'port' + ' -> ' + f.type);
+      a.push(v.name + ':' + f.name + 'port -> ' + f.type);
     });
 
     return a;

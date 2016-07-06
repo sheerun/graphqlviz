@@ -4,180 +4,180 @@ graph [
 ];
 node [
   fontsize = "16"
-  shape = "ellipse"
+  shape = "plaintext"
 ];
 edge [
 ];
-Root [label="Root | allFilms(after:String, first:Int, before:String, last:Int): FilmsConnection | film(id:ID, filmID:ID): Film | allPeople(after:String, first:Int, before:String, last:Int): PeopleConnection | person(id:ID, personID:ID): Person | allPlanets(after:String, first:Int, before:String, last:Int): PlanetsConnection | planet(id:ID, planetID:ID): Planet | allSpecies(after:String, first:Int, before:String, last:Int): SpeciesConnection | species(id:ID, speciesID:ID): Species | allStarships(after:String, first:Int, before:String, last:Int): StarshipsConnection | starship(id:ID, starshipID:ID): Starship | allVehicles(after:String, first:Int, before:String, last:Int): VehiclesConnection | vehicle(id:ID, vehicleID:ID): Vehicle | node(id:ID): Node" shape="record"];
-FilmsConnection [label="FilmsConnection | pageInfo: PageInfo | edges: [FilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
-Film [label="Film | title: String | episodeID: Int | openingCrawl: String | director: String | producers: [String] | releaseDate: String | speciesConnection(after:String, first:Int, before:String, last:Int): FilmSpeciesConnection | starshipConnection(after:String, first:Int, before:String, last:Int): FilmStarshipsConnection | vehicleConnection(after:String, first:Int, before:String, last:Int): FilmVehiclesConnection | characterConnection(after:String, first:Int, before:String, last:Int): FilmCharactersConnection | planetConnection(after:String, first:Int, before:String, last:Int): FilmPlanetsConnection | created: String | edited: String | id: ID" shape="record"];
-PeopleConnection [label="PeopleConnection | pageInfo: PageInfo | edges: [PeopleEdge] | totalCount: Int | people: [Person]" shape="record"];
-Person [label="Person | name: String | birthYear: String | eyeColor: String | gender: String | hairColor: String | height: Int | mass: Int | skinColor: String | homeworld: Planet | filmConnection(after:String, first:Int, before:String, last:Int): PersonFilmsConnection | species: Species | starshipConnection(after:String, first:Int, before:String, last:Int): PersonStarshipsConnection | vehicleConnection(after:String, first:Int, before:String, last:Int): PersonVehiclesConnection | created: String | edited: String | id: ID" shape="record"];
-PlanetsConnection [label="PlanetsConnection | pageInfo: PageInfo | edges: [PlanetsEdge] | totalCount: Int | planets: [Planet]" shape="record"];
-Planet [label="Planet | name: String | diameter: Int | rotationPeriod: Int | orbitalPeriod: Int | gravity: String | population: Int | climates: [String] | terrains: [String] | surfaceWater: Float | residentConnection(after:String, first:Int, before:String, last:Int): PlanetResidentsConnection | filmConnection(after:String, first:Int, before:String, last:Int): PlanetFilmsConnection | created: String | edited: String | id: ID" shape="record"];
-SpeciesConnection [label="SpeciesConnection | pageInfo: PageInfo | edges: [SpeciesEdge] | totalCount: Int | species: [Species]" shape="record"];
-Species [label="Species | name: String | classification: String | designation: String | averageHeight: Float | averageLifespan: Int | eyeColors: [String] | hairColors: [String] | skinColors: [String] | language: String | homeworld: Planet | personConnection(after:String, first:Int, before:String, last:Int): SpeciesPeopleConnection | filmConnection(after:String, first:Int, before:String, last:Int): SpeciesFilmsConnection | created: String | edited: String | id: ID" shape="record"];
-StarshipsConnection [label="StarshipsConnection | pageInfo: PageInfo | edges: [StarshipsEdge] | totalCount: Int | starships: [Starship]" shape="record"];
-Starship [label="Starship | name: String | model: String | starshipClass: String | manufacturers: [String] | costInCredits: Float | length: Float | crew: String | passengers: String | maxAtmospheringSpeed: Int | hyperdriveRating: Float | MGLT: Int | cargoCapacity: Float | consumables: String | pilotConnection(after:String, first:Int, before:String, last:Int): StarshipPilotsConnection | filmConnection(after:String, first:Int, before:String, last:Int): StarshipFilmsConnection | created: String | edited: String | id: ID" shape="record"];
-VehiclesConnection [label="VehiclesConnection | pageInfo: PageInfo | edges: [VehiclesEdge] | totalCount: Int | vehicles: [Vehicle]" shape="record"];
-Vehicle [label="Vehicle | name: String | model: String | vehicleClass: String | manufacturers: [String] | costInCredits: Int | length: Float | crew: String | passengers: String | maxAtmospheringSpeed: Int | cargoCapacity: Int | consumables: String | pilotConnection(after:String, first:Int, before:String, last:Int): VehiclePilotsConnection | filmConnection(after:String, first:Int, before:String, last:Int): VehicleFilmsConnection | created: String | edited: String | id: ID" shape="record"];
-PageInfo [label="PageInfo | hasNextPage: Boolean | hasPreviousPage: Boolean | startCursor: String | endCursor: String" shape="record"];
-FilmsEdge [label="FilmsEdge | node: Film | cursor: String" shape="record"];
-FilmSpeciesConnection [label="FilmSpeciesConnection | pageInfo: PageInfo | edges: [FilmSpeciesEdge] | totalCount: Int | species: [Species]" shape="record"];
-FilmStarshipsConnection [label="FilmStarshipsConnection | pageInfo: PageInfo | edges: [FilmStarshipsEdge] | totalCount: Int | starships: [Starship]" shape="record"];
-FilmVehiclesConnection [label="FilmVehiclesConnection | pageInfo: PageInfo | edges: [FilmVehiclesEdge] | totalCount: Int | vehicles: [Vehicle]" shape="record"];
-FilmCharactersConnection [label="FilmCharactersConnection | pageInfo: PageInfo | edges: [FilmCharactersEdge] | totalCount: Int | characters: [Person]" shape="record"];
-FilmPlanetsConnection [label="FilmPlanetsConnection | pageInfo: PageInfo | edges: [FilmPlanetsEdge] | totalCount: Int | planets: [Planet]" shape="record"];
-PeopleEdge [label="PeopleEdge | node: Person | cursor: String" shape="record"];
-PersonFilmsConnection [label="PersonFilmsConnection | pageInfo: PageInfo | edges: [PersonFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
-PersonStarshipsConnection [label="PersonStarshipsConnection | pageInfo: PageInfo | edges: [PersonStarshipsEdge] | totalCount: Int | starships: [Starship]" shape="record"];
-PersonVehiclesConnection [label="PersonVehiclesConnection | pageInfo: PageInfo | edges: [PersonVehiclesEdge] | totalCount: Int | vehicles: [Vehicle]" shape="record"];
-PlanetsEdge [label="PlanetsEdge | node: Planet | cursor: String" shape="record"];
-PlanetResidentsConnection [label="PlanetResidentsConnection | pageInfo: PageInfo | edges: [PlanetResidentsEdge] | totalCount: Int | residents: [Person]" shape="record"];
-PlanetFilmsConnection [label="PlanetFilmsConnection | pageInfo: PageInfo | edges: [PlanetFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
-SpeciesEdge [label="SpeciesEdge | node: Species | cursor: String" shape="record"];
-SpeciesPeopleConnection [label="SpeciesPeopleConnection | pageInfo: PageInfo | edges: [SpeciesPeopleEdge] | totalCount: Int | people: [Person]" shape="record"];
-SpeciesFilmsConnection [label="SpeciesFilmsConnection | pageInfo: PageInfo | edges: [SpeciesFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
-StarshipsEdge [label="StarshipsEdge | node: Starship | cursor: String" shape="record"];
-StarshipPilotsConnection [label="StarshipPilotsConnection | pageInfo: PageInfo | edges: [StarshipPilotsEdge] | totalCount: Int | pilots: [Person]" shape="record"];
-StarshipFilmsConnection [label="StarshipFilmsConnection | pageInfo: PageInfo | edges: [StarshipFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
-VehiclesEdge [label="VehiclesEdge | node: Vehicle | cursor: String" shape="record"];
-VehiclePilotsConnection [label="VehiclePilotsConnection | pageInfo: PageInfo | edges: [VehiclePilotsEdge] | totalCount: Int | pilots: [Person]" shape="record"];
-VehicleFilmsConnection [label="VehicleFilmsConnection | pageInfo: PageInfo | edges: [VehicleFilmsEdge] | totalCount: Int | films: [Film]" shape="record"];
-FilmSpeciesEdge [label="FilmSpeciesEdge | node: Species | cursor: String" shape="record"];
-FilmStarshipsEdge [label="FilmStarshipsEdge | node: Starship | cursor: String" shape="record"];
-FilmVehiclesEdge [label="FilmVehiclesEdge | node: Vehicle | cursor: String" shape="record"];
-FilmCharactersEdge [label="FilmCharactersEdge | node: Person | cursor: String" shape="record"];
-FilmPlanetsEdge [label="FilmPlanetsEdge | node: Planet | cursor: String" shape="record"];
-PersonFilmsEdge [label="PersonFilmsEdge | node: Film | cursor: String" shape="record"];
-PersonStarshipsEdge [label="PersonStarshipsEdge | node: Starship | cursor: String" shape="record"];
-PersonVehiclesEdge [label="PersonVehiclesEdge | node: Vehicle | cursor: String" shape="record"];
-PlanetResidentsEdge [label="PlanetResidentsEdge | node: Person | cursor: String" shape="record"];
-PlanetFilmsEdge [label="PlanetFilmsEdge | node: Film | cursor: String" shape="record"];
-SpeciesPeopleEdge [label="SpeciesPeopleEdge | node: Person | cursor: String" shape="record"];
-SpeciesFilmsEdge [label="SpeciesFilmsEdge | node: Film | cursor: String" shape="record"];
-StarshipPilotsEdge [label="StarshipPilotsEdge | node: Person | cursor: String" shape="record"];
-StarshipFilmsEdge [label="StarshipFilmsEdge | node: Film | cursor: String" shape="record"];
-VehiclePilotsEdge [label="VehiclePilotsEdge | node: Person | cursor: String" shape="record"];
-VehicleFilmsEdge [label="VehicleFilmsEdge | node: Film | cursor: String" shape="record"];
+Root [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Root</B></TD></TR><TR><TD PORT="allFilmsport">allFilms(after:String, first:Int, before:String, last:Int): FilmsConnection</TD></TR>,<TR><TD PORT="filmport">film(id:ID, filmID:ID): Film</TD></TR>,<TR><TD PORT="allPeopleport">allPeople(after:String, first:Int, before:String, last:Int): PeopleConnection</TD></TR>,<TR><TD PORT="personport">person(id:ID, personID:ID): Person</TD></TR>,<TR><TD PORT="allPlanetsport">allPlanets(after:String, first:Int, before:String, last:Int): PlanetsConnection</TD></TR>,<TR><TD PORT="planetport">planet(id:ID, planetID:ID): Planet</TD></TR>,<TR><TD PORT="allSpeciesport">allSpecies(after:String, first:Int, before:String, last:Int): SpeciesConnection</TD></TR>,<TR><TD PORT="speciesport">species(id:ID, speciesID:ID): Species</TD></TR>,<TR><TD PORT="allStarshipsport">allStarships(after:String, first:Int, before:String, last:Int): StarshipsConnection</TD></TR>,<TR><TD PORT="starshipport">starship(id:ID, starshipID:ID): Starship</TD></TR>,<TR><TD PORT="allVehiclesport">allVehicles(after:String, first:Int, before:String, last:Int): VehiclesConnection</TD></TR>,<TR><TD PORT="vehicleport">vehicle(id:ID, vehicleID:ID): Vehicle</TD></TR>,<TR><TD PORT="nodeport">node(id:ID): Node</TD></TR></TABLE>>];
+FilmsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [FilmsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="filmsport">films: [Film]</TD></TR></TABLE>>];
+Film [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Film</B></TD></TR><TR><TD PORT="titleport">title: String</TD></TR>,<TR><TD PORT="episodeIDport">episodeID: Int</TD></TR>,<TR><TD PORT="openingCrawlport">openingCrawl: String</TD></TR>,<TR><TD PORT="directorport">director: String</TD></TR>,<TR><TD PORT="producersport">producers: [String]</TD></TR>,<TR><TD PORT="releaseDateport">releaseDate: String</TD></TR>,<TR><TD PORT="speciesConnectionport">speciesConnection(after:String, first:Int, before:String, last:Int): FilmSpeciesConnection</TD></TR>,<TR><TD PORT="starshipConnectionport">starshipConnection(after:String, first:Int, before:String, last:Int): FilmStarshipsConnection</TD></TR>,<TR><TD PORT="vehicleConnectionport">vehicleConnection(after:String, first:Int, before:String, last:Int): FilmVehiclesConnection</TD></TR>,<TR><TD PORT="characterConnectionport">characterConnection(after:String, first:Int, before:String, last:Int): FilmCharactersConnection</TD></TR>,<TR><TD PORT="planetConnectionport">planetConnection(after:String, first:Int, before:String, last:Int): FilmPlanetsConnection</TD></TR>,<TR><TD PORT="createdport">created: String</TD></TR>,<TR><TD PORT="editedport">edited: String</TD></TR>,<TR><TD PORT="idport">id: ID</TD></TR></TABLE>>];
+PeopleConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PeopleConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PeopleEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="peopleport">people: [Person]</TD></TR></TABLE>>];
+Person [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Person</B></TD></TR><TR><TD PORT="nameport">name: String</TD></TR>,<TR><TD PORT="birthYearport">birthYear: String</TD></TR>,<TR><TD PORT="eyeColorport">eyeColor: String</TD></TR>,<TR><TD PORT="genderport">gender: String</TD></TR>,<TR><TD PORT="hairColorport">hairColor: String</TD></TR>,<TR><TD PORT="heightport">height: Int</TD></TR>,<TR><TD PORT="massport">mass: Int</TD></TR>,<TR><TD PORT="skinColorport">skinColor: String</TD></TR>,<TR><TD PORT="homeworldport">homeworld: Planet</TD></TR>,<TR><TD PORT="filmConnectionport">filmConnection(after:String, first:Int, before:String, last:Int): PersonFilmsConnection</TD></TR>,<TR><TD PORT="speciesport">species: Species</TD></TR>,<TR><TD PORT="starshipConnectionport">starshipConnection(after:String, first:Int, before:String, last:Int): PersonStarshipsConnection</TD></TR>,<TR><TD PORT="vehicleConnectionport">vehicleConnection(after:String, first:Int, before:String, last:Int): PersonVehiclesConnection</TD></TR>,<TR><TD PORT="createdport">created: String</TD></TR>,<TR><TD PORT="editedport">edited: String</TD></TR>,<TR><TD PORT="idport">id: ID</TD></TR></TABLE>>];
+PlanetsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PlanetsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PlanetsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="planetsport">planets: [Planet]</TD></TR></TABLE>>];
+Planet [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Planet</B></TD></TR><TR><TD PORT="nameport">name: String</TD></TR>,<TR><TD PORT="diameterport">diameter: Int</TD></TR>,<TR><TD PORT="rotationPeriodport">rotationPeriod: Int</TD></TR>,<TR><TD PORT="orbitalPeriodport">orbitalPeriod: Int</TD></TR>,<TR><TD PORT="gravityport">gravity: String</TD></TR>,<TR><TD PORT="populationport">population: Int</TD></TR>,<TR><TD PORT="climatesport">climates: [String]</TD></TR>,<TR><TD PORT="terrainsport">terrains: [String]</TD></TR>,<TR><TD PORT="surfaceWaterport">surfaceWater: Float</TD></TR>,<TR><TD PORT="residentConnectionport">residentConnection(after:String, first:Int, before:String, last:Int): PlanetResidentsConnection</TD></TR>,<TR><TD PORT="filmConnectionport">filmConnection(after:String, first:Int, before:String, last:Int): PlanetFilmsConnection</TD></TR>,<TR><TD PORT="createdport">created: String</TD></TR>,<TR><TD PORT="editedport">edited: String</TD></TR>,<TR><TD PORT="idport">id: ID</TD></TR></TABLE>>];
+SpeciesConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>SpeciesConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [SpeciesEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="speciesport">species: [Species]</TD></TR></TABLE>>];
+Species [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Species</B></TD></TR><TR><TD PORT="nameport">name: String</TD></TR>,<TR><TD PORT="classificationport">classification: String</TD></TR>,<TR><TD PORT="designationport">designation: String</TD></TR>,<TR><TD PORT="averageHeightport">averageHeight: Float</TD></TR>,<TR><TD PORT="averageLifespanport">averageLifespan: Int</TD></TR>,<TR><TD PORT="eyeColorsport">eyeColors: [String]</TD></TR>,<TR><TD PORT="hairColorsport">hairColors: [String]</TD></TR>,<TR><TD PORT="skinColorsport">skinColors: [String]</TD></TR>,<TR><TD PORT="languageport">language: String</TD></TR>,<TR><TD PORT="homeworldport">homeworld: Planet</TD></TR>,<TR><TD PORT="personConnectionport">personConnection(after:String, first:Int, before:String, last:Int): SpeciesPeopleConnection</TD></TR>,<TR><TD PORT="filmConnectionport">filmConnection(after:String, first:Int, before:String, last:Int): SpeciesFilmsConnection</TD></TR>,<TR><TD PORT="createdport">created: String</TD></TR>,<TR><TD PORT="editedport">edited: String</TD></TR>,<TR><TD PORT="idport">id: ID</TD></TR></TABLE>>];
+StarshipsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>StarshipsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [StarshipsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="starshipsport">starships: [Starship]</TD></TR></TABLE>>];
+Starship [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Starship</B></TD></TR><TR><TD PORT="nameport">name: String</TD></TR>,<TR><TD PORT="modelport">model: String</TD></TR>,<TR><TD PORT="starshipClassport">starshipClass: String</TD></TR>,<TR><TD PORT="manufacturersport">manufacturers: [String]</TD></TR>,<TR><TD PORT="costInCreditsport">costInCredits: Float</TD></TR>,<TR><TD PORT="lengthport">length: Float</TD></TR>,<TR><TD PORT="crewport">crew: String</TD></TR>,<TR><TD PORT="passengersport">passengers: String</TD></TR>,<TR><TD PORT="maxAtmospheringSpeedport">maxAtmospheringSpeed: Int</TD></TR>,<TR><TD PORT="hyperdriveRatingport">hyperdriveRating: Float</TD></TR>,<TR><TD PORT="MGLTport">MGLT: Int</TD></TR>,<TR><TD PORT="cargoCapacityport">cargoCapacity: Float</TD></TR>,<TR><TD PORT="consumablesport">consumables: String</TD></TR>,<TR><TD PORT="pilotConnectionport">pilotConnection(after:String, first:Int, before:String, last:Int): StarshipPilotsConnection</TD></TR>,<TR><TD PORT="filmConnectionport">filmConnection(after:String, first:Int, before:String, last:Int): StarshipFilmsConnection</TD></TR>,<TR><TD PORT="createdport">created: String</TD></TR>,<TR><TD PORT="editedport">edited: String</TD></TR>,<TR><TD PORT="idport">id: ID</TD></TR></TABLE>>];
+VehiclesConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>VehiclesConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [VehiclesEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="vehiclesport">vehicles: [Vehicle]</TD></TR></TABLE>>];
+Vehicle [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Vehicle</B></TD></TR><TR><TD PORT="nameport">name: String</TD></TR>,<TR><TD PORT="modelport">model: String</TD></TR>,<TR><TD PORT="vehicleClassport">vehicleClass: String</TD></TR>,<TR><TD PORT="manufacturersport">manufacturers: [String]</TD></TR>,<TR><TD PORT="costInCreditsport">costInCredits: Int</TD></TR>,<TR><TD PORT="lengthport">length: Float</TD></TR>,<TR><TD PORT="crewport">crew: String</TD></TR>,<TR><TD PORT="passengersport">passengers: String</TD></TR>,<TR><TD PORT="maxAtmospheringSpeedport">maxAtmospheringSpeed: Int</TD></TR>,<TR><TD PORT="cargoCapacityport">cargoCapacity: Int</TD></TR>,<TR><TD PORT="consumablesport">consumables: String</TD></TR>,<TR><TD PORT="pilotConnectionport">pilotConnection(after:String, first:Int, before:String, last:Int): VehiclePilotsConnection</TD></TR>,<TR><TD PORT="filmConnectionport">filmConnection(after:String, first:Int, before:String, last:Int): VehicleFilmsConnection</TD></TR>,<TR><TD PORT="createdport">created: String</TD></TR>,<TR><TD PORT="editedport">edited: String</TD></TR>,<TR><TD PORT="idport">id: ID</TD></TR></TABLE>>];
+PageInfo [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PageInfo</B></TD></TR><TR><TD PORT="hasNextPageport">hasNextPage: Boolean</TD></TR>,<TR><TD PORT="hasPreviousPageport">hasPreviousPage: Boolean</TD></TR>,<TR><TD PORT="startCursorport">startCursor: String</TD></TR>,<TR><TD PORT="endCursorport">endCursor: String</TD></TR></TABLE>>];
+FilmsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Film</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+FilmSpeciesConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmSpeciesConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [FilmSpeciesEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="speciesport">species: [Species]</TD></TR></TABLE>>];
+FilmStarshipsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmStarshipsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [FilmStarshipsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="starshipsport">starships: [Starship]</TD></TR></TABLE>>];
+FilmVehiclesConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmVehiclesConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [FilmVehiclesEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="vehiclesport">vehicles: [Vehicle]</TD></TR></TABLE>>];
+FilmCharactersConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmCharactersConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [FilmCharactersEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="charactersport">characters: [Person]</TD></TR></TABLE>>];
+FilmPlanetsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmPlanetsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [FilmPlanetsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="planetsport">planets: [Planet]</TD></TR></TABLE>>];
+PeopleEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PeopleEdge</B></TD></TR><TR><TD PORT="nodeport">node: Person</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PersonFilmsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PersonFilmsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PersonFilmsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="filmsport">films: [Film]</TD></TR></TABLE>>];
+PersonStarshipsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PersonStarshipsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PersonStarshipsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="starshipsport">starships: [Starship]</TD></TR></TABLE>>];
+PersonVehiclesConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PersonVehiclesConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PersonVehiclesEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="vehiclesport">vehicles: [Vehicle]</TD></TR></TABLE>>];
+PlanetsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PlanetsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Planet</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PlanetResidentsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PlanetResidentsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PlanetResidentsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="residentsport">residents: [Person]</TD></TR></TABLE>>];
+PlanetFilmsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PlanetFilmsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [PlanetFilmsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="filmsport">films: [Film]</TD></TR></TABLE>>];
+SpeciesEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>SpeciesEdge</B></TD></TR><TR><TD PORT="nodeport">node: Species</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+SpeciesPeopleConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>SpeciesPeopleConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [SpeciesPeopleEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="peopleport">people: [Person]</TD></TR></TABLE>>];
+SpeciesFilmsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>SpeciesFilmsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [SpeciesFilmsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="filmsport">films: [Film]</TD></TR></TABLE>>];
+StarshipsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>StarshipsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Starship</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+StarshipPilotsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>StarshipPilotsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [StarshipPilotsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="pilotsport">pilots: [Person]</TD></TR></TABLE>>];
+StarshipFilmsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>StarshipFilmsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [StarshipFilmsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="filmsport">films: [Film]</TD></TR></TABLE>>];
+VehiclesEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>VehiclesEdge</B></TD></TR><TR><TD PORT="nodeport">node: Vehicle</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+VehiclePilotsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>VehiclePilotsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [VehiclePilotsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="pilotsport">pilots: [Person]</TD></TR></TABLE>>];
+VehicleFilmsConnection [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>VehicleFilmsConnection</B></TD></TR><TR><TD PORT="pageInfoport">pageInfo: PageInfo</TD></TR>,<TR><TD PORT="edgesport">edges: [VehicleFilmsEdge]</TD></TR>,<TR><TD PORT="totalCountport">totalCount: Int</TD></TR>,<TR><TD PORT="filmsport">films: [Film]</TD></TR></TABLE>>];
+FilmSpeciesEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmSpeciesEdge</B></TD></TR><TR><TD PORT="nodeport">node: Species</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+FilmStarshipsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmStarshipsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Starship</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+FilmVehiclesEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmVehiclesEdge</B></TD></TR><TR><TD PORT="nodeport">node: Vehicle</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+FilmCharactersEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmCharactersEdge</B></TD></TR><TR><TD PORT="nodeport">node: Person</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+FilmPlanetsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>FilmPlanetsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Planet</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PersonFilmsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PersonFilmsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Film</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PersonStarshipsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PersonStarshipsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Starship</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PersonVehiclesEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PersonVehiclesEdge</B></TD></TR><TR><TD PORT="nodeport">node: Vehicle</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PlanetResidentsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PlanetResidentsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Person</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+PlanetFilmsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>PlanetFilmsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Film</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+SpeciesPeopleEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>SpeciesPeopleEdge</B></TD></TR><TR><TD PORT="nodeport">node: Person</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+SpeciesFilmsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>SpeciesFilmsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Film</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+StarshipPilotsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>StarshipPilotsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Person</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+StarshipFilmsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>StarshipFilmsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Film</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+VehiclePilotsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>VehiclePilotsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Person</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
+VehicleFilmsEdge [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>VehicleFilmsEdge</B></TD></TR><TR><TD PORT="nodeport">node: Film</TD></TR>,<TR><TD PORT="cursorport">cursor: String</TD></TR></TABLE>>];
 
-Root -> FilmsConnection
-Root -> Film
-Root -> PeopleConnection
-Root -> Person
-Root -> PlanetsConnection
-Root -> Planet
-Root -> SpeciesConnection
-Root -> Species
-Root -> StarshipsConnection
-Root -> Starship
-Root -> VehiclesConnection
-Root -> Vehicle
-FilmsConnection -> PageInfo
-FilmsConnection -> FilmsEdge
-FilmsConnection -> Film
-Film -> FilmSpeciesConnection
-Film -> FilmStarshipsConnection
-Film -> FilmVehiclesConnection
-Film -> FilmCharactersConnection
-Film -> FilmPlanetsConnection
-PeopleConnection -> PageInfo
-PeopleConnection -> PeopleEdge
-PeopleConnection -> Person
-Person -> Planet
-Person -> PersonFilmsConnection
-Person -> Species
-Person -> PersonStarshipsConnection
-Person -> PersonVehiclesConnection
-PlanetsConnection -> PageInfo
-PlanetsConnection -> PlanetsEdge
-PlanetsConnection -> Planet
-Planet -> PlanetResidentsConnection
-Planet -> PlanetFilmsConnection
-SpeciesConnection -> PageInfo
-SpeciesConnection -> SpeciesEdge
-SpeciesConnection -> Species
-Species -> Planet
-Species -> SpeciesPeopleConnection
-Species -> SpeciesFilmsConnection
-StarshipsConnection -> PageInfo
-StarshipsConnection -> StarshipsEdge
-StarshipsConnection -> Starship
-Starship -> StarshipPilotsConnection
-Starship -> StarshipFilmsConnection
-VehiclesConnection -> PageInfo
-VehiclesConnection -> VehiclesEdge
-VehiclesConnection -> Vehicle
-Vehicle -> VehiclePilotsConnection
-Vehicle -> VehicleFilmsConnection
-FilmsEdge -> Film
-FilmSpeciesConnection -> PageInfo
-FilmSpeciesConnection -> FilmSpeciesEdge
-FilmSpeciesConnection -> Species
-FilmStarshipsConnection -> PageInfo
-FilmStarshipsConnection -> FilmStarshipsEdge
-FilmStarshipsConnection -> Starship
-FilmVehiclesConnection -> PageInfo
-FilmVehiclesConnection -> FilmVehiclesEdge
-FilmVehiclesConnection -> Vehicle
-FilmCharactersConnection -> PageInfo
-FilmCharactersConnection -> FilmCharactersEdge
-FilmCharactersConnection -> Person
-FilmPlanetsConnection -> PageInfo
-FilmPlanetsConnection -> FilmPlanetsEdge
-FilmPlanetsConnection -> Planet
-PeopleEdge -> Person
-PersonFilmsConnection -> PageInfo
-PersonFilmsConnection -> PersonFilmsEdge
-PersonFilmsConnection -> Film
-PersonStarshipsConnection -> PageInfo
-PersonStarshipsConnection -> PersonStarshipsEdge
-PersonStarshipsConnection -> Starship
-PersonVehiclesConnection -> PageInfo
-PersonVehiclesConnection -> PersonVehiclesEdge
-PersonVehiclesConnection -> Vehicle
-PlanetsEdge -> Planet
-PlanetResidentsConnection -> PageInfo
-PlanetResidentsConnection -> PlanetResidentsEdge
-PlanetResidentsConnection -> Person
-PlanetFilmsConnection -> PageInfo
-PlanetFilmsConnection -> PlanetFilmsEdge
-PlanetFilmsConnection -> Film
-SpeciesEdge -> Species
-SpeciesPeopleConnection -> PageInfo
-SpeciesPeopleConnection -> SpeciesPeopleEdge
-SpeciesPeopleConnection -> Person
-SpeciesFilmsConnection -> PageInfo
-SpeciesFilmsConnection -> SpeciesFilmsEdge
-SpeciesFilmsConnection -> Film
-StarshipsEdge -> Starship
-StarshipPilotsConnection -> PageInfo
-StarshipPilotsConnection -> StarshipPilotsEdge
-StarshipPilotsConnection -> Person
-StarshipFilmsConnection -> PageInfo
-StarshipFilmsConnection -> StarshipFilmsEdge
-StarshipFilmsConnection -> Film
-VehiclesEdge -> Vehicle
-VehiclePilotsConnection -> PageInfo
-VehiclePilotsConnection -> VehiclePilotsEdge
-VehiclePilotsConnection -> Person
-VehicleFilmsConnection -> PageInfo
-VehicleFilmsConnection -> VehicleFilmsEdge
-VehicleFilmsConnection -> Film
-FilmSpeciesEdge -> Species
-FilmStarshipsEdge -> Starship
-FilmVehiclesEdge -> Vehicle
-FilmCharactersEdge -> Person
-FilmPlanetsEdge -> Planet
-PersonFilmsEdge -> Film
-PersonStarshipsEdge -> Starship
-PersonVehiclesEdge -> Vehicle
-PlanetResidentsEdge -> Person
-PlanetFilmsEdge -> Film
-SpeciesPeopleEdge -> Person
-SpeciesFilmsEdge -> Film
-StarshipPilotsEdge -> Person
-StarshipFilmsEdge -> Film
-VehiclePilotsEdge -> Person
-VehicleFilmsEdge -> Film
+Root:allFilmsport -> FilmsConnection
+Root:filmport -> Film
+Root:allPeopleport -> PeopleConnection
+Root:personport -> Person
+Root:allPlanetsport -> PlanetsConnection
+Root:planetport -> Planet
+Root:allSpeciesport -> SpeciesConnection
+Root:speciesport -> Species
+Root:allStarshipsport -> StarshipsConnection
+Root:starshipport -> Starship
+Root:allVehiclesport -> VehiclesConnection
+Root:vehicleport -> Vehicle
+FilmsConnection:pageInfoport -> PageInfo
+FilmsConnection:edgesport -> FilmsEdge
+FilmsConnection:filmsport -> Film
+Film:speciesConnectionport -> FilmSpeciesConnection
+Film:starshipConnectionport -> FilmStarshipsConnection
+Film:vehicleConnectionport -> FilmVehiclesConnection
+Film:characterConnectionport -> FilmCharactersConnection
+Film:planetConnectionport -> FilmPlanetsConnection
+PeopleConnection:pageInfoport -> PageInfo
+PeopleConnection:edgesport -> PeopleEdge
+PeopleConnection:peopleport -> Person
+Person:homeworldport -> Planet
+Person:filmConnectionport -> PersonFilmsConnection
+Person:speciesport -> Species
+Person:starshipConnectionport -> PersonStarshipsConnection
+Person:vehicleConnectionport -> PersonVehiclesConnection
+PlanetsConnection:pageInfoport -> PageInfo
+PlanetsConnection:edgesport -> PlanetsEdge
+PlanetsConnection:planetsport -> Planet
+Planet:residentConnectionport -> PlanetResidentsConnection
+Planet:filmConnectionport -> PlanetFilmsConnection
+SpeciesConnection:pageInfoport -> PageInfo
+SpeciesConnection:edgesport -> SpeciesEdge
+SpeciesConnection:speciesport -> Species
+Species:homeworldport -> Planet
+Species:personConnectionport -> SpeciesPeopleConnection
+Species:filmConnectionport -> SpeciesFilmsConnection
+StarshipsConnection:pageInfoport -> PageInfo
+StarshipsConnection:edgesport -> StarshipsEdge
+StarshipsConnection:starshipsport -> Starship
+Starship:pilotConnectionport -> StarshipPilotsConnection
+Starship:filmConnectionport -> StarshipFilmsConnection
+VehiclesConnection:pageInfoport -> PageInfo
+VehiclesConnection:edgesport -> VehiclesEdge
+VehiclesConnection:vehiclesport -> Vehicle
+Vehicle:pilotConnectionport -> VehiclePilotsConnection
+Vehicle:filmConnectionport -> VehicleFilmsConnection
+FilmsEdge:nodeport -> Film
+FilmSpeciesConnection:pageInfoport -> PageInfo
+FilmSpeciesConnection:edgesport -> FilmSpeciesEdge
+FilmSpeciesConnection:speciesport -> Species
+FilmStarshipsConnection:pageInfoport -> PageInfo
+FilmStarshipsConnection:edgesport -> FilmStarshipsEdge
+FilmStarshipsConnection:starshipsport -> Starship
+FilmVehiclesConnection:pageInfoport -> PageInfo
+FilmVehiclesConnection:edgesport -> FilmVehiclesEdge
+FilmVehiclesConnection:vehiclesport -> Vehicle
+FilmCharactersConnection:pageInfoport -> PageInfo
+FilmCharactersConnection:edgesport -> FilmCharactersEdge
+FilmCharactersConnection:charactersport -> Person
+FilmPlanetsConnection:pageInfoport -> PageInfo
+FilmPlanetsConnection:edgesport -> FilmPlanetsEdge
+FilmPlanetsConnection:planetsport -> Planet
+PeopleEdge:nodeport -> Person
+PersonFilmsConnection:pageInfoport -> PageInfo
+PersonFilmsConnection:edgesport -> PersonFilmsEdge
+PersonFilmsConnection:filmsport -> Film
+PersonStarshipsConnection:pageInfoport -> PageInfo
+PersonStarshipsConnection:edgesport -> PersonStarshipsEdge
+PersonStarshipsConnection:starshipsport -> Starship
+PersonVehiclesConnection:pageInfoport -> PageInfo
+PersonVehiclesConnection:edgesport -> PersonVehiclesEdge
+PersonVehiclesConnection:vehiclesport -> Vehicle
+PlanetsEdge:nodeport -> Planet
+PlanetResidentsConnection:pageInfoport -> PageInfo
+PlanetResidentsConnection:edgesport -> PlanetResidentsEdge
+PlanetResidentsConnection:residentsport -> Person
+PlanetFilmsConnection:pageInfoport -> PageInfo
+PlanetFilmsConnection:edgesport -> PlanetFilmsEdge
+PlanetFilmsConnection:filmsport -> Film
+SpeciesEdge:nodeport -> Species
+SpeciesPeopleConnection:pageInfoport -> PageInfo
+SpeciesPeopleConnection:edgesport -> SpeciesPeopleEdge
+SpeciesPeopleConnection:peopleport -> Person
+SpeciesFilmsConnection:pageInfoport -> PageInfo
+SpeciesFilmsConnection:edgesport -> SpeciesFilmsEdge
+SpeciesFilmsConnection:filmsport -> Film
+StarshipsEdge:nodeport -> Starship
+StarshipPilotsConnection:pageInfoport -> PageInfo
+StarshipPilotsConnection:edgesport -> StarshipPilotsEdge
+StarshipPilotsConnection:pilotsport -> Person
+StarshipFilmsConnection:pageInfoport -> PageInfo
+StarshipFilmsConnection:edgesport -> StarshipFilmsEdge
+StarshipFilmsConnection:filmsport -> Film
+VehiclesEdge:nodeport -> Vehicle
+VehiclePilotsConnection:pageInfoport -> PageInfo
+VehiclePilotsConnection:edgesport -> VehiclePilotsEdge
+VehiclePilotsConnection:pilotsport -> Person
+VehicleFilmsConnection:pageInfoport -> PageInfo
+VehicleFilmsConnection:edgesport -> VehicleFilmsEdge
+VehicleFilmsConnection:filmsport -> Film
+FilmSpeciesEdge:nodeport -> Species
+FilmStarshipsEdge:nodeport -> Starship
+FilmVehiclesEdge:nodeport -> Vehicle
+FilmCharactersEdge:nodeport -> Person
+FilmPlanetsEdge:nodeport -> Planet
+PersonFilmsEdge:nodeport -> Film
+PersonStarshipsEdge:nodeport -> Starship
+PersonVehiclesEdge:nodeport -> Vehicle
+PlanetResidentsEdge:nodeport -> Person
+PlanetFilmsEdge:nodeport -> Film
+SpeciesPeopleEdge:nodeport -> Person
+SpeciesFilmsEdge:nodeport -> Film
+StarshipPilotsEdge:nodeport -> Person
+StarshipFilmsEdge:nodeport -> Film
+VehiclePilotsEdge:nodeport -> Person
+VehicleFilmsEdge:nodeport -> Film
 }

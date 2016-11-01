@@ -1,3 +1,7 @@
+# 1.3.0
+
+- Allow soring fields with `--sort` flag
+
 # 1.1.0
 
 - Include field arguments in output by default

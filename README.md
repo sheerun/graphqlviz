@@ -11,23 +11,21 @@ $ npm install -g graphqlviz
 ```
 
 ```
-$ graphqlviz --help
+GraphQL Server CLI visualizer
 
-  GraphQL Server CLI visualizer
+Options:
+  -a, --noargs     render without field arguments
+  -v, --verbose    print introspection result
+  -s, --sort       sort fields
 
-  Options:
-    -a, --noargs     render without field arguments
-    -v, --verbose    print introspection result
+Usage
+  $ graphqlviz [url]
+      Renders dot schema from [url] endpoint
 
-  Usage
-    $ graphqlviz [url]
-        Renders dot schema from [url] endpoint
-
-  Examples
-    $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
-    $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview
-    $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview
-
+Examples
+  $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
+  $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview
+  $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview
 ```
 
 ## Team

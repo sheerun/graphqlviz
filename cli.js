@@ -10,6 +10,7 @@ var cli = meow([
   'Options:',
   '  -a, --noargs     render without field arguments',
   '  -v, --verbose    print introspection result',
+  '  -s, --sort       sort fields',
   '',
   'Usage',
   '  $ graphqlviz [url]',
@@ -23,13 +24,15 @@ var cli = meow([
 ], {
   alias: {
     v: 'verbose',
-    a: 'noargs'
+    a: 'noargs',
+    s: 'sort'
   }
 });
 
 // build render options
 var opts = {
-  noargs: cli.flags.noargs
+  noargs: cli.flags.noargs,
+  sort: cli.flags.sort
 };
 
 function terminate() {

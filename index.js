@@ -149,7 +149,9 @@ module.exports.render = function (schema, opts) {
   // nodes
   dotfile += _.map(entities, function (v) {
     // sort if desired
-    if(opts.sort) v.fields = _.sortBy(v.fields, 'name');
+    if (opts.sort) {
+      v.fields = _.sortBy(v.fields, 'name');
+    }
 
     var rows = _.map(v.fields, function (v) {
       var str = v.name;

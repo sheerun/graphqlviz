@@ -19,7 +19,18 @@ function processType(item, entities, types) {
     obj.deprecationReason = field.deprecationReason;
 
     // process field type
+    // if NON_NULL, hoist the nested type out
+    if (field.type.kind === 'NON_NULL') {
+      field.type = field.type.ofType;
+      obj.isRequired = true;
+    }
+
     if (field.type.ofType) {
+      // if nested type is NON_NULL, hoist the nested-nested type out
+      if (field.type.ofType.kind === 'NON_NULL') {
+        field.type.ofType = field.type.ofType.ofType;
+        obj.isNestedRequired = true;
+      }
       obj.type = field.type.ofType.name;
       obj.isObjectType = field.type.ofType.kind === 'OBJECT';
       obj.isList = field.type.kind === 'LIST';
@@ -35,7 +46,7 @@ function processType(item, entities, types) {
         obj.name = arg.name;
         if (arg.type.ofType) {
           obj.type = arg.type.ofType.name;
-          obj.isRequired = arg.type.ofType.kind === 'NON_NULL';
+          obj.isRequired = arg.type.kind === 'NON_NULL';
         } else {
           obj.type = arg.type.name;
         }
@@ -159,7 +170,7 @@ module.exports.render = function (schema, opts) {
       // render args if desired & present
       if (!opts.noargs && v.args && v.args.length) {
         str += '(' + _.map(v.args, function (v) {
-          return v.name + ':' + v.type;
+          return v.name + ':' + v.type + (v.isRequired ? '!' : '');
         }).join(', ') + ')';
       }
       var deprecationReason = '';
@@ -169,7 +180,7 @@ module.exports.render = function (schema, opts) {
         deprecationReason += '</FONT>';
       }
       return {
-        text: str + ': ' + (v.isList ? '[' + v.type + ']' : v.type) + deprecationReason,
+        text: str + ': ' + (v.isList ? '[' + v.type + (v.isNestedRequired ? '!' : '') + ']' : v.type) + (v.isRequired ? '!' : '') + deprecationReason,
         name: v.name + 'port'
       };
     });

@@ -1,0 +1,16 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "plaintext"
+];
+edge [
+];
+Root [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Root</B></TD></TR><TR><TD PORT="userport">user(id:String!): User</TD></TR>,<TR><TD PORT="usersport">users: [User]!</TD></TR></TABLE>>];
+User [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>User</B></TD></TR><TR><TD PORT="idport">id: String!</TD></TR>,<TR><TD PORT="emailport">email: String</TD></TR></TABLE>>];
+
+Root:userport -> User
+Root:usersport -> User
+}

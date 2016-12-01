@@ -3,6 +3,7 @@
 require('es6-promise').polyfill();
 var fetch = require('isomorphic-fetch');
 var meow = require('meow');
+var fs = require('fs');
 var getStdin = require('get-stdin');
 var graphqlviz = require('./');
 
@@ -19,6 +20,7 @@ var cli = meow([
   'Examples',
   '  $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png',
   '  $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview',
+  '  $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview',
   '  $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview',
   ' '
 ], {
@@ -63,16 +65,34 @@ if (cli.input[0] === 'query') {
     }
   });
 } else if (cli.input.length === 1) {
-  fetch(cli.input[0], {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({query: graphqlviz.query})
-  }).then(function (res) {
-    return res.text();
-  }).then(function (text) {
+  var p;
+
+  // otherwise http(s)
+  if (cli.input[0].slice(0, 4) === 'http') {
+    p = fetch(cli.input[0], {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query: graphqlviz.query})
+    }).then(function (res) {
+      return res.text();
+    });
+  } else {
+    // if not http, try local file
+    p = new Promise(function (resolve, reject) {
+      fs.readFile(cli.input[0], {encoding: 'utf8'}, function (err, data) {
+        if (err) {
+          return reject(err);
+        }
+        resolve(data);
+      });
+    });
+  }
+
+  // after getting text, try to parse as JSON and process
+  p.then(function (text) {
     var json;
 
     if (!text) {

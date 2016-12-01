@@ -18,6 +18,7 @@ $ graphqlviz --help
   Options:
     -a, --noargs     render without field arguments
     -v, --verbose    print introspection result
+    -s, --sort       sort fields
 
   Usage
     $ graphqlviz [url]
@@ -26,6 +27,7 @@ $ graphqlviz --help
   Examples
     $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
     $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview
+    $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
     $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview
 
 ```

@@ -164,24 +164,24 @@ module.exports.render = function (schema, opts) {
       v.fields = _.sortBy(v.fields, 'name');
     }
 
-    var rows = _.map(v.fields, function (v) {
-      var str = v.name;
+    var rows = _.map(v.fields, function (f) {
+      var str = f.name;
 
       // render args if desired & present
-      if (!opts.noargs && v.args && v.args.length) {
-        str += '(' + _.map(v.args, function (v) {
-          return v.name + ':' + v.type + (v.isRequired ? '!' : '');
+      if (!opts.noargs && f.args && f.args.length) {
+        str += '(' + _.map(f.args, function (a) {
+          return a.name + ':' + a.type + (a.isRequired ? '!' : '');
         }).join(', ') + ')';
       }
       var deprecationReason = '';
-      if (v.isDeprecated) {
+      if (f.isDeprecated) {
         deprecationReason = ' <FONT color="red">';
-        deprecationReason += (v.deprecationReason ? v.deprecationReason : 'Deprecated');
+        deprecationReason += (f.deprecationReason ? f.deprecationReason : 'Deprecated');
         deprecationReason += '</FONT>';
       }
       return {
-        text: str + ': ' + (v.isList ? '[' + v.type + (v.isNestedRequired ? '!' : '') + ']' : v.type) + (v.isRequired ? '!' : '') + deprecationReason,
-        name: v.name + 'port'
+        text: str + ': ' + (f.isList ? '[' + f.type + (f.isNestedRequired ? '!' : '') + ']' : f.type) + (f.isRequired ? '!' : '') + deprecationReason,
+        name: f.name + 'port'
       };
     });
     // rows.unshift("<B>" + v.name + "</B>");

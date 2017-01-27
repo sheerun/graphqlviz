@@ -1,0 +1,22 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "plaintext"
+];
+edge [
+];
+__GraphQLVizSchema__ [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Schema</B></TD></TR><TR><TD PORT="queryport">query: Query</TD></TR>,<TR><TD PORT="mutationport">mutation: Mutation</TD></TR></TABLE>>];
+Query [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Query</B></TD></TR><TR><TD PORT="nodeport">node(id:ID): Node</TD></TR>,<TR><TD PORT="foosport">foos(userId:ID): [Foo!]!</TD></TR></TABLE>>];
+Mutation [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Mutation</B></TD></TR><TR><TD PORT="createFooport">createFoo(input:CreateFooInput!): CreateFooPayload</TD></TR></TABLE>>];
+Foo [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Foo</B></TD></TR><TR><TD PORT="idport">id: ID!</TD></TR>,<TR><TD PORT="nameport">name: String</TD></TR></TABLE>>];
+CreateFooPayload [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>CreateFooPayload</B></TD></TR><TR><TD PORT="clientMutationIdport">clientMutationId: String!</TD></TR>,<TR><TD PORT="fooport">foo: Foo</TD></TR></TABLE>>];
+
+__GraphQLVizSchema__:queryport -> Query
+__GraphQLVizSchema__:mutationport -> Mutation
+Query:foosport -> Foo
+Mutation:createFooport -> CreateFooPayload
+CreateFooPayload:fooport -> Foo
+}

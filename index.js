@@ -100,7 +100,52 @@ function walkBFS(obj, iter) {
   }
 }
 
+const SchemaTypeSymbol = '__GraphQLVizSchema__';
+
+function getGraphRoot(root) {
+  // If there is only one of queryType, mutationType, or subscriptionType, use
+  // that as the root. Otherwise root as the schema and treat
+  // query/mutation/subscription as fields of that.
+  const rootTypes = ['query', 'mutation', 'subscription']
+    .map(function (name) {
+      return {
+        name: name,
+        type: root[name + 'Type']
+      };
+    })
+    .filter(function (t) {
+      return t.type;
+    });
+
+  if (rootTypes.length === 1) {
+    return {
+      q: [rootTypes[0].type.name],
+      types: root.types
+    };
+  }
+
+  return {
+    q: [SchemaTypeSymbol],
+    types: root.types.concat({
+      name: SchemaTypeSymbol,
+      fields: rootTypes.map(function (rt) {
+        return {
+          name: rt.name,
+          type: {
+            name: rt.type.name,
+            kind: 'OBJECT',
+            ofType: null
+          }
+        };
+      })
+    })
+  };
+}
+
 function getTypeDisplayName(typeName) {
+  if (typeName === SchemaTypeSymbol) {
+    return 'Schema';
+  }
   return typeName;
 }
 
@@ -126,13 +171,9 @@ module.exports.render = function (schema, opts) {
   }
 
   var root = _.get(schema, rootPath);
-
-  // build the graph
-  var q = [];
-  if (root.queryType) {
-    q.push(root.queryType.name);
-  }
-  // if(root.mutationType) q.push(root.mutationType.name);
+  var graphRoot = getGraphRoot(root);
+  var q = graphRoot.q;
+  var types = graphRoot.types;
 
   // walk the graph & build up nodes & edges
   var current;
@@ -146,7 +187,7 @@ module.exports.render = function (schema, opts) {
     }
 
     // process item
-    q = q.concat(processType(current, entities, root.types));
+    q = q.concat(processType(current, entities, types));
   }
 
   // build the dot

@@ -100,6 +100,10 @@ function walkBFS(obj, iter) {
   }
 }
 
+function getTypeDisplayName(typeName) {
+  return typeName;
+}
+
 module.exports.render = function (schema, opts) {
   opts = opts || {};
 
@@ -163,14 +167,13 @@ module.exports.render = function (schema, opts) {
     if (opts.sort) {
       v.fields = _.sortBy(v.fields, 'name');
     }
-
     var rows = _.map(v.fields, function (f) {
       var str = f.name;
 
       // render args if desired & present
       if (!opts.noargs && f.args && f.args.length) {
         str += '(' + _.map(f.args, function (a) {
-          return a.name + ':' + a.type + (a.isRequired ? '!' : '');
+          return a.name + ':' + getTypeDisplayName(a.type) + (a.isRequired ? '!' : '');
         }).join(', ') + ')';
       }
       var deprecationReason = '';
@@ -180,14 +183,14 @@ module.exports.render = function (schema, opts) {
         deprecationReason += '</FONT>';
       }
       return {
-        text: str + ': ' + (f.isList ? '[' + f.type + (f.isNestedRequired ? '!' : '') + ']' : f.type) + (f.isRequired ? '!' : '') + deprecationReason,
+        text: str + ': ' + (f.isList ? '[' + f.type + (f.isNestedRequired ? '!' : '') + ']' : getTypeDisplayName(f.type)) + (f.isRequired ? '!' : '') + deprecationReason,
         name: f.name + 'port'
       };
     });
-    // rows.unshift("<B>" + v.name + "</B>");
+    // rows.unshift("<B>" + getTypeDisplayName(v.name) + "</B>");
     var result = v.name + ' ';
     result += '[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">';
-    result += '<TR><TD><B>' + v.name + '</B></TD></TR>';
+    result += '<TR><TD><B>' + getTypeDisplayName(v.name) + '</B></TD></TR>';
     result += rows.map(function (row) {
       return '<TR><TD PORT="' + row.name + '">' + row.text + '</TD></TR>';
     });

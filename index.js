@@ -100,6 +100,55 @@ function walkBFS(obj, iter) {
   }
 }
 
+const SchemaTypeSymbol = '__GraphQLVizSchema__';
+
+function getGraphRoot(root) {
+  // If there is only one of queryType, mutationType, or subscriptionType, use
+  // that as the root. Otherwise root as the schema and treat
+  // query/mutation/subscription as fields of that.
+  const rootTypes = ['query', 'mutation', 'subscription']
+    .map(function (name) {
+      return {
+        name: name,
+        type: root[name + 'Type']
+      };
+    })
+    .filter(function (t) {
+      return t.type;
+    });
+
+  if (rootTypes.length === 1) {
+    return {
+      q: [rootTypes[0].type.name],
+      types: root.types
+    };
+  }
+
+  return {
+    q: [SchemaTypeSymbol],
+    types: root.types.concat({
+      name: SchemaTypeSymbol,
+      fields: rootTypes.map(function (rt) {
+        return {
+          name: rt.name,
+          type: {
+            name: rt.type.name,
+            kind: 'OBJECT',
+            ofType: null
+          }
+        };
+      })
+    })
+  };
+}
+
+function getTypeDisplayName(typeName) {
+  if (typeName === SchemaTypeSymbol) {
+    return 'Schema';
+  }
+  return typeName;
+}
+
 module.exports.render = function (schema, opts) {
   opts = opts || {};
 
@@ -122,13 +171,9 @@ module.exports.render = function (schema, opts) {
   }
 
   var root = _.get(schema, rootPath);
-
-  // build the graph
-  var q = [];
-  if (root.queryType) {
-    q.push(root.queryType.name);
-  }
-  // if(root.mutationType) q.push(root.mutationType.name);
+  var graphRoot = getGraphRoot(root);
+  var q = graphRoot.q;
+  var types = graphRoot.types;
 
   // walk the graph & build up nodes & edges
   var current;
@@ -142,7 +187,7 @@ module.exports.render = function (schema, opts) {
     }
 
     // process item
-    q = q.concat(processType(current, entities, root.types));
+    q = q.concat(processType(current, entities, types));
   }
 
   // build the dot
@@ -163,31 +208,30 @@ module.exports.render = function (schema, opts) {
     if (opts.sort) {
       v.fields = _.sortBy(v.fields, 'name');
     }
-
-    var rows = _.map(v.fields, function (v) {
-      var str = v.name;
+    var rows = _.map(v.fields, function (f) {
+      var str = f.name;
 
       // render args if desired & present
-      if (!opts.noargs && v.args && v.args.length) {
-        str += '(' + _.map(v.args, function (v) {
-          return v.name + ':' + v.type + (v.isRequired ? '!' : '');
+      if (!opts.noargs && f.args && f.args.length) {
+        str += '(' + _.map(f.args, function (a) {
+          return a.name + ':' + getTypeDisplayName(a.type) + (a.isRequired ? '!' : '');
         }).join(', ') + ')';
       }
       var deprecationReason = '';
-      if (v.isDeprecated) {
+      if (f.isDeprecated) {
         deprecationReason = ' <FONT color="red">';
-        deprecationReason += (v.deprecationReason ? v.deprecationReason : 'Deprecated');
+        deprecationReason += (f.deprecationReason ? f.deprecationReason : 'Deprecated');
         deprecationReason += '</FONT>';
       }
       return {
-        text: str + ': ' + (v.isList ? '[' + v.type + (v.isNestedRequired ? '!' : '') + ']' : v.type) + (v.isRequired ? '!' : '') + deprecationReason,
-        name: v.name + 'port'
+        text: str + ': ' + (f.isList ? '[' + f.type + (f.isNestedRequired ? '!' : '') + ']' : getTypeDisplayName(f.type)) + (f.isRequired ? '!' : '') + deprecationReason,
+        name: f.name + 'port'
       };
     });
-    // rows.unshift("<B>" + v.name + "</B>");
+    // rows.unshift("<B>" + getTypeDisplayName(v.name) + "</B>");
     var result = v.name + ' ';
     result += '[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">';
-    result += '<TR><TD><B>' + v.name + '</B></TD></TR>';
+    result += '<TR><TD><B>' + getTypeDisplayName(v.name) + '</B></TD></TR>';
     result += rows.map(function (row) {
       return '<TR><TD PORT="' + row.name + '">' + row.text + '</TD></TR>';
     });

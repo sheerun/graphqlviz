@@ -30,3 +30,10 @@ test('render with support for NON_NULL lists', t => {
   var computed = graphqlviz.render(input, {}) + '\n';
   t.same(computed, output);
 });
+
+test('render with support for mutationType', t => {
+  var input = fs.readFileSync(path.resolve(__dirname, 'test/query-mutation-input.json')).toString();
+  var output = fs.readFileSync(path.resolve(__dirname, 'test/query-mutation-output.dot')).toString();
+  var computed = graphqlviz.render(input, {}) + '\n';
+  t.same(computed, output);
+});

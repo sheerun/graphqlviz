@@ -1,0 +1,67 @@
+enum Episode {
+  NEWHOPE
+  EMPIRE
+  JEDI
+}
+
+enum LengthUnit {
+  METER
+  FEET
+}
+
+interface Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+}
+
+type Human implements Character {
+  id: ID!
+  name: String!
+  friends: [Character!]
+  appearsIn: [Episode]!
+  starships: [Starship]
+  totalCredits: Int
+}
+
+type Droid implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  primaryFunction: String
+  hasVisited(star: [Star!]!): [Boolean]
+}
+
+type Starship {
+  id: ID!
+  name: String!
+  length(unit: LengthUnit = METER): Float
+}
+
+type Query {
+  hero(episode: Episode): Character
+  droid(id: ID!): Droid
+  search(input: SearchInput): SearchResult
+}
+
+union SearchResult = Human | Droid | Starship
+
+input SearchInput {
+  text: String!
+  episodes: [Episode]
+}
+
+input Galaxy {
+  name: String
+}
+
+input Star {
+  name: String
+  galaxy: Galaxy
+}
+
+schema {
+  query: Query
+}

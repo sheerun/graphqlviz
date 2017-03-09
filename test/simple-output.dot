@@ -8,9 +8,21 @@ node [
 ];
 edge [
 ];
-Root [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>Root</B></TD></TR><TR><TD PORT="userport">user(id:String!): User</TD></TR>,<TR><TD PORT="usersport">users: [User]!</TD></TR></TABLE>>];
-User [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD><B>User</B></TD></TR><TR><TD PORT="idport">id: String!</TD></TR>,<TR><TD PORT="emailport">email: String</TD></TR></TABLE>>];
+"Root" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Root</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="userport"><FONT COLOR="BLACK">user(id: String!): User</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="usersport"><FONT COLOR="BLACK">users: [User]!</FONT></TD></TR></TABLE>>];
+"User" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>User</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="emailport"><FONT COLOR="BLACK">email: String</FONT></TD></TR></TABLE>>];
 
-Root:userport -> User
-Root:usersport -> User
+
+
+
+
+
+
+
+
+
+
+"Root":userport -> "User":__title [color="BLACK" fontcolor="BLACK"];
+"Root":usersport -> "User":__title [color="BLACK" fontcolor="BLACK"];
+
+
 }

@@ -1,0 +1,52 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "plaintext"
+];
+edge [
+];
+subgraph cluster_0 {color=RED4;label="Types";"Query" [label=<<TABLE COLOR="RED4" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="RED4"><FONT COLOR="WHITE"><B>Query</B></FONT></TD></TR><TR><TD><TABLE COLOR="RED4" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="heroport"><FONT COLOR="RED4">hero(<FONT COLOR="MIDNIGHTBLUE">episode: Episode</FONT>): Character</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="droidport"><FONT COLOR="RED4">droid(<FONT COLOR="MIDNIGHTBLUE">id: ID!</FONT>): Droid</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="searchport"><FONT COLOR="RED4">search(<FONT COLOR="MIDNIGHTBLUE">input: SearchInput</FONT>): SearchResult</FONT></TD></TR></TABLE></TD></TR></TABLE>>];
+"Droid" [label=<<TABLE COLOR="RED4" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="RED4"><FONT COLOR="WHITE"><B>Droid</B></FONT></TD></TR><TR><TD><TABLE COLOR="RED4" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="idport"><FONT COLOR="RED4">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="nameport"><FONT COLOR="RED4">name: String!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="friendsport"><FONT COLOR="RED4">friends: [Character]</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="appearsInport"><FONT COLOR="RED4">appearsIn: [Episode]!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="primaryFunctionport"><FONT COLOR="RED4">primaryFunction: String</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="hasVisitedport"><FONT COLOR="RED4">hasVisited(<FONT COLOR="MIDNIGHTBLUE">star: [Star!]!</FONT>): [Boolean]</FONT></TD></TR></TABLE></TD></TR></TABLE>>];
+"Human" [label=<<TABLE COLOR="RED4" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="RED4"><FONT COLOR="WHITE"><B>Human</B></FONT></TD></TR><TR><TD><TABLE COLOR="RED4" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="idport"><FONT COLOR="RED4">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="nameport"><FONT COLOR="RED4">name: String!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="friendsport"><FONT COLOR="RED4">friends: [Character!]</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="appearsInport"><FONT COLOR="RED4">appearsIn: [Episode]!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="starshipsport"><FONT COLOR="RED4">starships: [Starship]</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="totalCreditsport"><FONT COLOR="RED4">totalCredits: Int</FONT></TD></TR></TABLE></TD></TR></TABLE>>];
+"Starship" [label=<<TABLE COLOR="RED4" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="RED4"><FONT COLOR="WHITE"><B>Starship</B></FONT></TD></TR><TR><TD><TABLE COLOR="RED4" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="idport"><FONT COLOR="RED4">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="nameport"><FONT COLOR="RED4">name: String!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="lengthport"><FONT COLOR="RED4">length(<FONT COLOR="MIDNIGHTBLUE">unit: LengthUnit</FONT>): Float</FONT></TD></TR></TABLE></TD></TR></TABLE>>];}
+
+subgraph cluster_1 {color=LIMEGREEN;label="Enum Types";"Episode" [label=<<TABLE COLOR="LIMEGREEN" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="LIMEGREEN"><FONT COLOR="WHITE"><B>Episode</B></FONT></TD></TR><TR><TD><TABLE COLOR="LIMEGREEN" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="NEWHOPEport"><FONT COLOR="LIMEGREEN">NEWHOPE</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="EMPIREport"><FONT COLOR="LIMEGREEN">EMPIRE</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="JEDIport"><FONT COLOR="LIMEGREEN">JEDI</FONT></TD></TR></TABLE></TD></TR></TABLE>>];
+"LengthUnit" [label=<<TABLE COLOR="LIMEGREEN" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="LIMEGREEN"><FONT COLOR="WHITE"><B>LengthUnit</B></FONT></TD></TR><TR><TD><TABLE COLOR="LIMEGREEN" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="METERport"><FONT COLOR="LIMEGREEN">METER</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="FEETport"><FONT COLOR="LIMEGREEN">FEET</FONT></TD></TR></TABLE></TD></TR></TABLE>>];}
+
+subgraph cluster_2 {color=ORANGERED;label="Interface Types";"Character" [label=<<TABLE COLOR="ORANGERED" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="ORANGERED"><FONT COLOR="WHITE"><B>Character</B></FONT></TD></TR><TR><TD><TABLE COLOR="ORANGERED" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="idport"><FONT COLOR="ORANGERED">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="nameport"><FONT COLOR="ORANGERED">name: String!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="friendsport"><FONT COLOR="ORANGERED">friends: [Character]</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="appearsInport"><FONT COLOR="ORANGERED">appearsIn: [Episode]!</FONT></TD></TR></TABLE></TD></TR></TABLE>>];}
+
+subgraph cluster_3 {color=MIDNIGHTBLUE;label="Input Types";"Star" [label=<<TABLE COLOR="MIDNIGHTBLUE" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="MIDNIGHTBLUE"><FONT COLOR="WHITE"><B>Star</B></FONT></TD></TR><TR><TD><TABLE COLOR="MIDNIGHTBLUE" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="nameport"><FONT COLOR="MIDNIGHTBLUE">name: String</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="galaxyport"><FONT COLOR="MIDNIGHTBLUE">galaxy: Galaxy</FONT></TD></TR></TABLE></TD></TR></TABLE>>];
+"Galaxy" [label=<<TABLE COLOR="MIDNIGHTBLUE" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="MIDNIGHTBLUE"><FONT COLOR="WHITE"><B>Galaxy</B></FONT></TD></TR><TR><TD><TABLE COLOR="MIDNIGHTBLUE" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="nameport"><FONT COLOR="MIDNIGHTBLUE">name: String</FONT></TD></TR></TABLE></TD></TR></TABLE>>];
+"SearchInput" [label=<<TABLE COLOR="MIDNIGHTBLUE" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="MIDNIGHTBLUE"><FONT COLOR="WHITE"><B>SearchInput</B></FONT></TD></TR><TR><TD><TABLE COLOR="MIDNIGHTBLUE" BORDER="0" CELLBORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT" PORT="textport"><FONT COLOR="MIDNIGHTBLUE">text: String!</FONT></TD></TR>,<TR><TD ALIGN="LEFT" PORT="episodesport"><FONT COLOR="MIDNIGHTBLUE">episodes: [Episode]</FONT></TD></TR></TABLE></TD></TR></TABLE>>];}
+
+subgraph cluster_4 {color=DARKORCHID;label="Unions";"SearchResult" [label=<<TABLE COLOR="DARKORCHID" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title" BGCOLOR="DARKORCHID"><FONT COLOR="WHITE"><B>SearchResult</B></FONT></TD></TR></TABLE>>];}
+
+
+
+"Query":heroport -> "Character":__title [color="ORANGERED" fontcolor="ORANGERED"];
+"Episode":__title -> "Query":heroport:w [color="MIDNIGHTBLUE" fontcolor="MIDNIGHTBLUE" label="is an input to"];
+"Query":droidport -> "Droid":__title [color="RED4" fontcolor="RED4"];
+"Query":searchport -> "SearchResult":__title [color="DARKORCHID" fontcolor="DARKORCHID"];
+"SearchInput":__title -> "Query":searchport:w [color="MIDNIGHTBLUE" fontcolor="MIDNIGHTBLUE" label="is an input to"];
+"Droid":friendsport -> "Character":__title [color="ORANGERED" fontcolor="ORANGERED"];
+"Droid":appearsInport -> "Episode":__title [color="LIMEGREEN" fontcolor="LIMEGREEN"];
+"Star":__title -> "Droid":hasVisitedport:w [color="MIDNIGHTBLUE" fontcolor="MIDNIGHTBLUE" label="is an input to"];
+"Human":friendsport -> "Character":__title [color="ORANGERED" fontcolor="ORANGERED"];
+"Human":appearsInport -> "Episode":__title [color="LIMEGREEN" fontcolor="LIMEGREEN"];
+"Human":starshipsport -> "Starship":__title [color="RED4" fontcolor="RED4"];
+"LengthUnit":__title -> "Starship":lengthport:w [color="MIDNIGHTBLUE" fontcolor="MIDNIGHTBLUE" label="is an input to"];
+"Character":friendsport -> "Character":__title [color="ORANGERED" fontcolor="ORANGERED"];
+"Character":appearsInport -> "Episode":__title [color="LIMEGREEN" fontcolor="LIMEGREEN"];
+"Character":__title -> "Droid":__title [color="RED4" fontcolor="RED4" label="is implemented by"];
+"Character":__title -> "Human":__title [color="RED4" fontcolor="RED4" label="is implemented by"];
+"Star":galaxyport -> "Galaxy":__title [color="MIDNIGHTBLUE" fontcolor="MIDNIGHTBLUE"];
+"SearchInput":episodesport -> "Episode":__title [color="LIMEGREEN" fontcolor="LIMEGREEN"];
+"SearchResult":__title -> "Human":__title [color="RED4" fontcolor="RED4" label="is union by"];
+"SearchResult":__title -> "Droid":__title [color="RED4" fontcolor="RED4" label="is union by"];
+"SearchResult":__title -> "Starship":__title [color="RED4" fontcolor="RED4" label="is union by"];
+
+
+}

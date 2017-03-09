@@ -12,6 +12,19 @@ module.exports.query = graphql.introspectionQuery;
 function processType(item, entities, types) {
   var type = _.find(types, {name: item});
 
+  var additionalTypes = [];
+
+  // get the type names of the union's possible types, given its type name
+  var addPossibleTypes = function (typeName) {
+    // possible typess is a property only of GraphQLUnionType
+    // we'd need a different mechanism for interfaces
+    var union = _.find(types, {name: typeName});
+    var possibleTypes = _.map(union.possibleTypes, 'name');
+
+    // we must also process the union field, as well as its possible types
+    additionalTypes = _.union(additionalTypes, possibleTypes, [typeName]);
+  };
+
   var fields = _.map(type.fields, function (field) {
     var obj = {};
     obj.name = field.name;
@@ -31,11 +44,19 @@ function processType(item, entities, types) {
         field.type.ofType = field.type.ofType.ofType;
         obj.isNestedRequired = true;
       }
+      if (field.type.ofType.kind === 'UNION') {
+        addPossibleTypes(field.type.ofType.name);
+      }
       obj.type = field.type.ofType.name;
+      obj.isUnionType = field.type.ofType.kind === 'UNION';
       obj.isObjectType = field.type.ofType.kind === 'OBJECT';
       obj.isList = field.type.kind === 'LIST';
     } else {
+      if (field.type.kind === 'UNION') {
+        addPossibleTypes(field.type.name);
+      }
       obj.type = field.type.name;
+      obj.isUnionType = field.type.kind === 'UNION';
       obj.isObjectType = field.type.kind === 'OBJECT';
     }
 
@@ -47,6 +68,11 @@ function processType(item, entities, types) {
         if (arg.type.ofType) {
           obj.type = arg.type.ofType.name;
           obj.isRequired = arg.type.kind === 'NON_NULL';
+          obj.isList = arg.type.kind === 'LIST';
+          if (arg.type.ofType.kind === 'NON_NULL') {
+            obj.type = field.type.ofType.ofType.name;
+            obj.isNestedRequired = true;
+          }
         } else {
           obj.type = arg.type.name;
         }
@@ -59,12 +85,14 @@ function processType(item, entities, types) {
 
   entities[type.name] = {
     name: type.name,
-    fields: fields
+    fields: fields,
+    possibleTypes: _.map(type.possibleTypes, 'name')
   };
 
   var linkeditems = _.chain(fields)
     .filter('isObjectType')
     .map('type')
+    .union(additionalTypes)
     .uniq()
     .value();
 
@@ -170,7 +198,7 @@ module.exports.render = function (schema, opts) {
       // render args if desired & present
       if (!opts.noargs && v.args && v.args.length) {
         str += '(' + _.map(v.args, function (v) {
-          return v.name + ':' + v.type + (v.isRequired ? '!' : '');
+          return v.name + ':' + (v.isList ? '[' + v.type + (v.isNestedRequired ? '!' : '') + ']' : v.type) + (v.isRequired ? '!' : '');
         }).join(', ') + ')';
       }
       var deprecationReason = '';
@@ -187,7 +215,7 @@ module.exports.render = function (schema, opts) {
     // rows.unshift("<B>" + v.name + "</B>");
     var result = v.name + ' ';
     result += '[label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">';
-    result += '<TR><TD><B>' + v.name + '</B></TD></TR>';
+    result += '<TR><TD PORT="__title"><B>' + v.name + '</B></TD></TR>';
     result += rows.map(function (row) {
       return '<TR><TD PORT="' + row.name + '">' + row.text + '</TD></TR>';
     });
@@ -202,11 +230,12 @@ module.exports.render = function (schema, opts) {
   dotfile += _.chain(entities)
   .reduce(function (a, v) {
     _.each(v.fields, function (f) {
-      if (!f.isObjectType) {
-        return;
+      if (f.isObjectType || f.isUnionType) {
+        a.push(v.name + ':' + f.name + 'port -> ' + f.type + ':__title');
       }
-
-      a.push(v.name + ':' + f.name + 'port -> ' + f.type);
+    });
+    _.each(v.possibleTypes, function (p) {
+      a.push(v.name + ' -> ' + p + ':__title');
     });
 
     return a;

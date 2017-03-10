@@ -1,0 +1,23 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "plaintext"
+];
+edge [
+];
+Query [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><B>Query</B></TD></TR><TR><TD PORT="heroport">hero(episode:Episode): Character</TD></TR>,<TR><TD PORT="droidport">droid(id:ID!): Droid</TD></TR>,<TR><TD PORT="searchport">search(input:SearchInput): SearchResult</TD></TR></TABLE>>];
+Droid [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><B>Droid</B></TD></TR><TR><TD PORT="idport">id: ID!</TD></TR>,<TR><TD PORT="nameport">name: String!</TD></TR>,<TR><TD PORT="friendsport">friends: [Character]</TD></TR>,<TR><TD PORT="appearsInport">appearsIn: [Episode]!</TD></TR>,<TR><TD PORT="primaryFunctionport">primaryFunction: String</TD></TR></TABLE>>];
+Human [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><B>Human</B></TD></TR><TR><TD PORT="idport">id: ID!</TD></TR>,<TR><TD PORT="nameport">name: String!</TD></TR>,<TR><TD PORT="friendsport">friends: [Character]</TD></TR>,<TR><TD PORT="appearsInport">appearsIn: [Episode]!</TD></TR>,<TR><TD PORT="starshipsport">starships: [Starship]</TD></TR>,<TR><TD PORT="totalCreditsport">totalCredits: Int</TD></TR></TABLE>>];
+Starship [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><B>Starship</B></TD></TR><TR><TD PORT="idport">id: ID!</TD></TR>,<TR><TD PORT="nameport">name: String!</TD></TR>,<TR><TD PORT="lengthport">length(unit:LengthUnit): Float</TD></TR></TABLE>>];
+SearchResult [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><B>SearchResult</B></TD></TR></TABLE>>];
+
+Query:droidport -> Droid:__title
+Query:searchport -> SearchResult:__title
+Human:starshipsport -> Starship:__title
+SearchResult -> Human:__title
+SearchResult -> Droid:__title
+SearchResult -> Starship:__title
+}

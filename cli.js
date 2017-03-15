@@ -5,6 +5,10 @@ var fetch = require('isomorphic-fetch');
 var meow = require('meow');
 var fs = require('fs');
 var getStdin = require('get-stdin');
+var GraphQL = require('graphql');
+var graphql = GraphQL.graphql;
+var parse = GraphQL.parse;
+var buildASTSchema = GraphQL.buildASTSchema;
 var graphqlviz = require('./');
 
 var cli = meow([
@@ -91,18 +95,15 @@ if (cli.input[0] === 'query') {
     });
   }
 
-  // after getting text, try to parse as JSON and process
-  p.then(function (text) {
-    var json;
-
+  // after getting text, try to parse as JSON and process, or use graphql to process a "graphql schema language" file
+  var jsonPromise = p.then(function (text) {
     if (!text) {
       return terminate();
     }
 
-    try {
-      json = JSON.parse(text);
-    } catch (e) {
-      console.error('Not a valid JSON. Use --verbose flag to see output.');
+    function onError(e, text) {
+      console.error('ERROR processing input. Use --verbose flag to see output.');
+      console.error(e.message);
 
       if (cli.flags.verbose) {
         console.error(text);
@@ -111,20 +112,39 @@ if (cli.input[0] === 'query') {
       process.exit(1);
     }
 
+    return new Promise(function (resolve, reject) {
+      try {
+        resolve(JSON.parse(text));
+      } catch (e) {
+        try {
+          var astDocument = parse(text);
+          var schema = buildASTSchema(astDocument);
+          graphql(schema, graphqlviz.query).then(function (data) {
+            resolve(data);
+          }).catch(function (e) {
+            reject('Fatal error, exiting.');
+            onError(e, text);
+          });
+        } catch (e) {
+          reject('Fatal error, exiting.');
+          onError(e, text);
+        }
+      }
+    });
+  });
+
+  jsonPromise.then(function (json) {
     try {
       console.log(graphqlviz.render(json, opts));
     } catch (e) {
       console.error('Invalid introspection result. Use --verbose flag to see output.');
 
       if (cli.flags.verbose) {
-        console.error(text);
+        console.error(JSON.stringify(json, null, 2, 2));
       }
 
       process.exit(1);
     }
-  }).catch(function (e) {
-    console.error('ERROR: ' + e.message);
-    process.exit(1);
   });
 } else {
   terminate();

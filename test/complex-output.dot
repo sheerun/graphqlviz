@@ -26,26 +26,26 @@ edge [
 
 
 
-"Query":heroport -> "Character":__title [color="BLACK" fontcolor="BLACK"];
-"Episode":__title -> "Query":heroport:w [color="BLACK" fontcolor="BLACK" label="is input to"];
-"Query":droidport -> "Droid":__title [color="BLACK" fontcolor="BLACK"];
-"Query":searchport -> "SearchResult":__title [color="BLACK" fontcolor="BLACK"];
-"SearchInput":__title -> "Query":searchport:w [color="BLACK" fontcolor="BLACK" label="is input to"];
-"Droid":friendsport -> "Character":__title [color="BLACK" fontcolor="BLACK"];
-"Droid":appearsInport -> "Episode":__title [color="BLACK" fontcolor="BLACK"];
-"Star":__title -> "Droid":hasVisitedport:w [color="BLACK" fontcolor="BLACK" label="is input to"];
-"Human":friendsport -> "Character":__title [color="BLACK" fontcolor="BLACK"];
-"Human":appearsInport -> "Episode":__title [color="BLACK" fontcolor="BLACK"];
-"Human":starshipsport -> "Starship":__title [color="BLACK" fontcolor="BLACK"];
-"LengthUnit":__title -> "Starship":lengthport:w [color="BLACK" fontcolor="BLACK" label="is input to"];
-"Character":appearsInport -> "Episode":__title [color="BLACK" fontcolor="BLACK"];
-"Character":__title -> "Droid":__title [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Character":__title -> "Human":__title [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Star":galaxyport -> "Galaxy":__title [color="BLACK" fontcolor="BLACK"];
-"SearchInput":episodesport -> "Episode":__title [color="BLACK" fontcolor="BLACK"];
-"SearchResult":__title -> "Human":__title [color="BLACK" fontcolor="BLACK"];
-"SearchResult":__title -> "Droid":__title [color="BLACK" fontcolor="BLACK"];
-"SearchResult":__title -> "Starship":__title [color="BLACK" fontcolor="BLACK"];
+"Query":heroport -> "Character" [color="BLACK" fontcolor="BLACK"];
+"Episode" -> "Query" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"Query":droidport -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"Query":searchport -> "SearchResult" [color="BLACK" fontcolor="BLACK"];
+"SearchInput" -> "Query" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"Droid":friendsport -> "Character" [color="BLACK" fontcolor="BLACK"];
+"Droid":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"Star" -> "Droid" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"Human":friendsport -> "Character" [color="BLACK" fontcolor="BLACK"];
+"Human":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"Human":starshipsport -> "Starship" [color="BLACK" fontcolor="BLACK"];
+"LengthUnit" -> "Starship" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"Character":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"Character" -> "Droid" [color="BLACK" fontcolor="BLACK" label="implemented by"];
+"Character" -> "Human" [color="BLACK" fontcolor="BLACK" label="implemented by"];
+"Star":galaxyport -> "Galaxy" [color="BLACK" fontcolor="BLACK"];
+"SearchInput":episodesport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"SearchResult" -> "Human" [color="BLACK" fontcolor="BLACK"];
+"SearchResult" -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"SearchResult" -> "Starship" [color="BLACK" fontcolor="BLACK"];
 
 
 }

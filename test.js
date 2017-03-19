@@ -52,6 +52,10 @@ test('render with config options inverted', t => {
     header: {
       invert: true
     },
+    anchor: {
+      header: true,
+      input: true
+    },
     edgesToSelf: true,
     field: {
       align: 'LEFT',

@@ -9,6 +9,10 @@ module.exports.configDefaults = {
   header: {
     invert: false
   },
+  anchor: {
+    input: false,
+    header: false
+  },
   edgesToSelf: false,
   field: {
     align: 'CENTER',
@@ -290,14 +294,15 @@ templates.edgeAttr = _.template('${ name }=${ _.isString(value) ? "\\"" + value 
 // would output:
 // `"Foo" -> "Bar"`
 function createEdge(input) {
+  var headerPort = config.anchor.header ? '__title' : null;
   var context = {
     leftNode: {
       name: input.from.className,
-      port: input.from.fieldName ? input.from.fieldName + 'port' : '__title'
+      port: input.from.fieldName ? input.from.fieldName + 'port' : headerPort
     },
     rightNode: {
       name: input.to.className,
-      port: input.to.fieldName ? input.to.fieldName + 'port:w' : '__title'
+      port: input.to.fieldName ? input.to.fieldName + 'port:w' : headerPort
     },
     attributes: {
       color: input.color,
@@ -528,7 +533,7 @@ module.exports.render = function (schema, opts) {
                 },
                 to: {
                   className: processedType.name,
-                  fieldName: field.name
+                  fieldName: config.anchor.input ? field.name : null
                 },
                 label: config.edgeLabels.input,
                 color: config.inputs.hide ? getColor(argType) : config.inputs.color,

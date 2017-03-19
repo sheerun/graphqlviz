@@ -50,6 +50,10 @@ Run `graphqlviz --help` for a full list of available customizations. Customizati
   "header": {
     "invert": false
   },
+  "anchor": {
+    "header": false,
+    "input": false
+  },
   "edgesToSelf": false,
   "field": {
     "align": "CENTER",

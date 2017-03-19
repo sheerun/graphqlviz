@@ -21,8 +21,8 @@ edge [
 
 
 
-"Root":userport -> "User":__title [color="BLACK" fontcolor="BLACK"];
-"Root":usersport -> "User":__title [color="BLACK" fontcolor="BLACK"];
+"Root":userport -> "User" [color="BLACK" fontcolor="BLACK"];
+"Root":usersport -> "User" [color="BLACK" fontcolor="BLACK"];
 
 
 }

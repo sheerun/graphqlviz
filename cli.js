@@ -38,6 +38,8 @@ var cli = meow([
   '',
   'Config',
   '  --header.invert for type headers, shows white text on colored background',
+  '  --anchor.header when an edge points to a type, anchor to that type\'s header',
+  '  --anchor.input for input types, anchor the edge to the field that contains the input argument',
   '  --edgesToSelf edges from an field to owning object will not be drawn',
   '  --field.align [default=CENTER] aligns the text for all the fields',
   '  --field.hideSeperators hides the lines between fields',

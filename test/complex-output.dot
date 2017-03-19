@@ -27,20 +27,20 @@ edge [
 
 
 "Query":heroport -> "Character" [color="BLACK" fontcolor="BLACK"];
-"Episode" -> "Query" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"Episode" -> "Query" [color="BLACK" fontcolor="BLACK"];
 "Query":droidport -> "Droid" [color="BLACK" fontcolor="BLACK"];
 "Query":searchport -> "SearchResult" [color="BLACK" fontcolor="BLACK"];
-"SearchInput" -> "Query" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"SearchInput" -> "Query" [color="BLACK" fontcolor="BLACK"];
 "Droid":friendsport -> "Character" [color="BLACK" fontcolor="BLACK"];
 "Droid":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
-"Star" -> "Droid" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"Star" -> "Droid" [color="BLACK" fontcolor="BLACK"];
 "Human":friendsport -> "Character" [color="BLACK" fontcolor="BLACK"];
 "Human":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
 "Human":starshipsport -> "Starship" [color="BLACK" fontcolor="BLACK"];
-"LengthUnit" -> "Starship" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"LengthUnit" -> "Starship" [color="BLACK" fontcolor="BLACK"];
 "Character":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
-"Character" -> "Droid" [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Character" -> "Human" [color="BLACK" fontcolor="BLACK" label="implemented by"];
+"Character" -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"Character" -> "Human" [color="BLACK" fontcolor="BLACK"];
 "Star":galaxyport -> "Galaxy" [color="BLACK" fontcolor="BLACK"];
 "SearchInput":episodesport -> "Episode" [color="BLACK" fontcolor="BLACK"];
 "SearchResult" -> "Human" [color="BLACK" fontcolor="BLACK"];

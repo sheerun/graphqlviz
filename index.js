@@ -20,9 +20,9 @@ module.exports.configDefaults = {
     colorArgs: false
   },
   edgeLabels: {
-    input: 'is input to',
+    input: '',
     union: '',
-    interface: 'implemented by'
+    interface: ''
   },
   types: {
     color: 'BLACK',

@@ -30,9 +30,9 @@ edge [
 "Query":nodeport -> "Node" [color="BLACK" fontcolor="BLACK"];
 "Query":foosport -> "Foo" [color="BLACK" fontcolor="BLACK"];
 "Mutation":createFooport -> "CreateFooPayload" [color="BLACK" fontcolor="BLACK"];
-"CreateFooInput" -> "Mutation" [color="BLACK" fontcolor="BLACK" label="is input to"];
+"CreateFooInput" -> "Mutation" [color="BLACK" fontcolor="BLACK"];
 "CreateFooPayload":fooport -> "Foo" [color="BLACK" fontcolor="BLACK"];
-"Node" -> "Foo" [color="BLACK" fontcolor="BLACK" label="implemented by"];
+"Node" -> "Foo" [color="BLACK" fontcolor="BLACK"];
 "CreateFooInput":fooport -> "CreateFooInputObjectType" [color="BLACK" fontcolor="BLACK"];
 
 

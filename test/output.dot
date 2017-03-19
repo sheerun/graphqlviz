@@ -191,12 +191,12 @@ edge [
 "StarshipFilmsEdge":nodeport -> "Film" [color="BLACK" fontcolor="BLACK"];
 "VehiclePilotsEdge":nodeport -> "Person" [color="BLACK" fontcolor="BLACK"];
 "VehicleFilmsEdge":nodeport -> "Film" [color="BLACK" fontcolor="BLACK"];
-"Node" -> "Planet" [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Node" -> "Species" [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Node" -> "Starship" [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Node" -> "Vehicle" [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Node" -> "Person" [color="BLACK" fontcolor="BLACK" label="implemented by"];
-"Node" -> "Film" [color="BLACK" fontcolor="BLACK" label="implemented by"];
+"Node" -> "Planet" [color="BLACK" fontcolor="BLACK"];
+"Node" -> "Species" [color="BLACK" fontcolor="BLACK"];
+"Node" -> "Starship" [color="BLACK" fontcolor="BLACK"];
+"Node" -> "Vehicle" [color="BLACK" fontcolor="BLACK"];
+"Node" -> "Person" [color="BLACK" fontcolor="BLACK"];
+"Node" -> "Film" [color="BLACK" fontcolor="BLACK"];
 
 
 }

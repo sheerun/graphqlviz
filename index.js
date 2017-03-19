@@ -290,18 +290,18 @@ templates.edge = _.template('${ "\\"" + leftNode.name + "\\"" + (leftNode.port ?
 templates.edgeAttr = _.template('${ name }=${ _.isString(value) ? "\\"" + value + "\\"" : value }');
 
 // for the given input, creates the edge description, for example:
-// `createEdge({from: {className: 'Foo'}, to: {className: 'Bar'}})`
+// `createEdge({from: {typeName: 'Foo'}, to: {typeName: 'Bar'}})`
 // would output:
 // `"Foo" -> "Bar"`
 function createEdge(input) {
   var headerPort = config.anchor.header ? '__title' : null;
   var context = {
     leftNode: {
-      name: input.from.className,
+      name: input.from.typeName,
       port: input.from.fieldName ? input.from.fieldName + 'port' : headerPort
     },
     rightNode: {
-      name: input.to.className,
+      name: input.to.typeName,
       port: input.to.fieldName ? input.to.fieldName + 'port:w' : headerPort
     },
     attributes: {
@@ -342,12 +342,12 @@ function createField(field, opts) {
   return output;
 }
 
-// For the given context, creates a table for the class with the className as
+// For the given context, creates a table for the class with the typeName as
 // the header, and rows as the fields
 function createTable(context) {
-  var result = '"' + context.className + '" ';
+  var result = '"' + context.typeName + '" ';
   result += '[label=<<TABLE COLOR="' + context.color + '" BORDER="0" CELLBORDER="1" CELLSPACING="0">';
-  result += '<TR><TD PORT="__title"' + (config.header.invert ? ' BGCOLOR="' + context.color + '"' : '') + '><FONT COLOR="' + (config.header.invert ? 'WHITE' : context.color) + '">' + (_.isEmpty(context.stereotype) || context.stereotype === 'null' ? '' : '&laquo;' + context.stereotype + '&raquo;<BR/>') + '<B>' + context.className + '</B></FONT></TD></TR>';
+  result += '<TR><TD PORT="__title"' + (config.header.invert ? ' BGCOLOR="' + context.color + '"' : '') + '><FONT COLOR="' + (config.header.invert ? 'WHITE' : context.color) + '">' + (_.isEmpty(context.stereotype) || context.stereotype === 'null' ? '' : '&laquo;' + context.stereotype + '&raquo;<BR/>') + '<B>' + context.typeName + '</B></FONT></TD></TR>';
   if (context.rows.length) {
     if (config.field.hideSeperators) {
       result += '<TR><TD><TABLE COLOR="' + context.color + '" BORDER="0" CELLBORDER="0" CELLSPACING="0">';
@@ -394,7 +394,7 @@ function graph(processedTypes, typeConfig, opts) {
     });
 
     return createTable({
-      className: getTypeDisplayName(v.name),
+      typeName: getTypeDisplayName(v.name),
       color: typeConfig.color,
       stereotype: typeConfig.stereotype,
       rows: rows
@@ -456,7 +456,7 @@ module.exports.render = function (schema, opts) {
   }
 
   // process all the enum fields
-  var enums = config.enums.hide ? [] : _.chain(root.types)
+  var enums = config.enums.hide ? [] : _.chain(types)
     .filter(function (type) {
       return type.kind === 'ENUM' && !_.startsWith(type.name, '__');
     })
@@ -464,7 +464,7 @@ module.exports.render = function (schema, opts) {
     .value();
 
   // process all the input fields
-  var inputs = config.inputs.hide ? [] : _.chain(root.types)
+  var inputs = config.inputs.hide ? [] : _.chain(types)
     .filter(function (type) {
       return type.kind === 'INPUT_OBJECT' && !_.startsWith(type.name, '__');
     })
@@ -479,7 +479,7 @@ module.exports.render = function (schema, opts) {
     isUnionType: true
   });
 
-  var types = _.filter(entities, {
+  var objects = _.filter(entities, {
     isInterfaceType: false,
     isUnionType: false
   });
@@ -496,7 +496,7 @@ module.exports.render = function (schema, opts) {
     'edge [\n' +
     '];\n';
 
-  dotfile += graph(types, config.types, opts);
+  dotfile += graph(objects, config.types, opts);
   dotfile += graph(enums, config.enums, opts);
   dotfile += graph(interfaces, config.interfaces, opts);
   dotfile += graph(inputs, config.inputs, opts);
@@ -505,7 +505,7 @@ module.exports.render = function (schema, opts) {
   dotfile += '\n\n';
 
   // key by to prevent need to search by name
-  var processedTypes = _.keyBy(_.union(types, enums, interfaces, inputs, unions), 'name');
+  var processedTypes = _.keyBy(_.union(objects, enums, interfaces, inputs, unions), 'name');
 
   dotfile += _.reduce(processedTypes, function (result, processedType) {
     if (!processedType.isEnumType) {
@@ -514,11 +514,11 @@ module.exports.render = function (schema, opts) {
         if (fieldType && isEnabled(fieldType) && (config.edgesToSelf || processedType.name !== fieldType.name)) {
           result.push(createEdge({
             from: {
-              className: processedType.name,
+              typeName: getTypeDisplayName(processedType.name),
               fieldName: field.name
             },
             to: {
-              className: fieldType.name
+              typeName: getTypeDisplayName(fieldType.name)
             },
             color: getColor(field)
           }));
@@ -529,10 +529,10 @@ module.exports.render = function (schema, opts) {
             if (argType && isEnabled(argType) && (config.edgesToSelf || argType.name !== processedType.name)) {
               result.push(createEdge({
                 from: {
-                  className: argType.name
+                  typeName: getTypeDisplayName(argType.name)
                 },
                 to: {
-                  className: processedType.name,
+                  typeName: getTypeDisplayName(processedType.name),
                   fieldName: config.anchor.input ? field.name : null
                 },
                 label: config.edgeLabels.input,
@@ -548,10 +548,10 @@ module.exports.render = function (schema, opts) {
         if (possibleType && isEnabled(possibleType) && (config.edgesToSelf || processedType.name !== possibleType.name)) {
           result.push(createEdge({
             from: {
-              className: processedType.name
+              typeName: getTypeDisplayName(processedType.name)
             },
             to: {
-              className: possibleType.name
+              typeName: getTypeDisplayName(possibleType.name)
             },
             label: processedType.isUnionType ? config.edgeLabels.union : config.edgeLabels.interface,
             color: getColor(possibleType)

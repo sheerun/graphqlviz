@@ -1,3 +1,11 @@
+# 2.0.0
+
+- Add support for UNION, INTERFACE, INPUT_OBJECT and ENUM types
+- Show mutation/subscription rooted at virtual "Schema" type.
+- Add ability to use graphql schema language files as input
+- Introduce `--theme` option for freely customizing appearance
+- Depreacte `--sort` and `--noargs` arguments in lieu of `--theme`
+
 # 1.4.0
 
 - Include '!' for required (`NON_NULL`) args and fields

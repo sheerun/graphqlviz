@@ -25,7 +25,7 @@ var cli = meow(
     '',
     'Examples',
     '  $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png',
-    '  $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview',
+    '  $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview',
     '  $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview',
     '  $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview',
     '  $ graphqlviz --print-theme > theme.json',

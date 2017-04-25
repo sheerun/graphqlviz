@@ -1,6 +1,6 @@
 {
   "name": "graphqlviz",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "GraphQL Server CLI visualizer",
   "license": "MIT",
   "repository": "https://github.com/sheerun/graphqlviz.git",

@@ -1,0 +1,39 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "plaintext"
+];
+edge [
+];
+"Schema" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Schema</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="queryport"><FONT COLOR="BLACK">query: Query</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="mutationport"><FONT COLOR="BLACK">mutation: Mutation</FONT></TD></TR></TABLE>>];
+"Query" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Query</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="nodeport"><FONT COLOR="BLACK">node(id: ID): Node</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="foosport"><FONT COLOR="BLACK">foos(userId: ID): [Foo!]!</FONT></TD></TR></TABLE>>];
+"Mutation" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Mutation</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="createFooport"><FONT COLOR="BLACK">createFoo(input: CreateFooInput!): CreateFooPayload</FONT></TD></TR></TABLE>>];
+"Foo" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Foo</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String</FONT></TD></TR></TABLE>>];
+"CreateFooPayload" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>CreateFooPayload</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="clientMutationIdport"><FONT COLOR="BLACK">clientMutationId: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="fooport"><FONT COLOR="BLACK">foo: Foo</FONT></TD></TR></TABLE>>];
+
+
+
+"Node" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;interface&raquo;<BR/><B>Node</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: ID!</FONT></TD></TR></TABLE>>];
+
+"CreateFooInput" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;input&raquo;<BR/><B>CreateFooInput</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="clientMutationIdport"><FONT COLOR="BLACK">clientMutationId: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="fooport"><FONT COLOR="BLACK">foo: CreateFooInputObjectType!</FONT></TD></TR></TABLE>>];
+"CreateFooInputObjectType" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;input&raquo;<BR/><B>CreateFooInputObjectType</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String!</FONT></TD></TR></TABLE>>];
+
+
+
+
+
+"Schema":queryport -> "Query" [color="BLACK" fontcolor="BLACK"];
+"Schema":mutationport -> "Mutation" [color="BLACK" fontcolor="BLACK"];
+"Query":nodeport -> "Node" [color="BLACK" fontcolor="BLACK"];
+"Query":foosport -> "Foo" [color="BLACK" fontcolor="BLACK"];
+"Mutation":createFooport -> "CreateFooPayload" [color="BLACK" fontcolor="BLACK"];
+"CreateFooInput" -> "Mutation" [color="BLACK" fontcolor="BLACK"];
+"CreateFooPayload":fooport -> "Foo" [color="BLACK" fontcolor="BLACK"];
+"Node" -> "Foo" [color="BLACK" fontcolor="BLACK"];
+"CreateFooInput":fooport -> "CreateFooInputObjectType" [color="BLACK" fontcolor="BLACK"];
+
+
+}

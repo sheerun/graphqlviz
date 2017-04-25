@@ -1,0 +1,51 @@
+digraph erd {
+graph [
+  rankdir = "LR"
+];
+node [
+  fontsize = "16"
+  shape = "plaintext"
+];
+edge [
+];
+"Query" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Query</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="heroport"><FONT COLOR="BLACK">hero(episode: Episode): Character</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="droidport"><FONT COLOR="BLACK">droid(id: ID!): Droid</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="searchport"><FONT COLOR="BLACK">search(input: SearchInput): SearchResult</FONT></TD></TR></TABLE>>];
+"Droid" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Droid</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="friendsport"><FONT COLOR="BLACK">friends: [Character]</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="appearsInport"><FONT COLOR="BLACK">appearsIn: [Episode]!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="primaryFunctionport"><FONT COLOR="BLACK">primaryFunction: String</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="hasVisitedport"><FONT COLOR="BLACK">hasVisited(star: [Star!]!): [Boolean]</FONT></TD></TR></TABLE>>];
+"Human" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Human</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="friendsport"><FONT COLOR="BLACK">friends: [Character!]</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="appearsInport"><FONT COLOR="BLACK">appearsIn: [Episode]!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="starshipsport"><FONT COLOR="BLACK">starships: [Starship]</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="totalCreditsport"><FONT COLOR="BLACK">totalCredits: Int</FONT></TD></TR></TABLE>>];
+"Starship" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK"><B>Starship</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="lengthport"><FONT COLOR="BLACK">length(unit: LengthUnit): Float</FONT></TD></TR></TABLE>>];
+
+"Episode" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;enumeration&raquo;<BR/><B>Episode</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="NEWHOPEport"><FONT COLOR="BLACK">NEWHOPE</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="EMPIREport"><FONT COLOR="BLACK">EMPIRE</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="JEDIport"><FONT COLOR="BLACK">JEDI</FONT></TD></TR></TABLE>>];
+"LengthUnit" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;enumeration&raquo;<BR/><B>LengthUnit</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="METERport"><FONT COLOR="BLACK">METER</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="FEETport"><FONT COLOR="BLACK">FEET</FONT></TD></TR></TABLE>>];
+
+"Character" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;interface&raquo;<BR/><B>Character</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="idport"><FONT COLOR="BLACK">id: ID!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="friendsport"><FONT COLOR="BLACK">friends: [Character]</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="appearsInport"><FONT COLOR="BLACK">appearsIn: [Episode]!</FONT></TD></TR></TABLE>>];
+
+"Star" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;input&raquo;<BR/><B>Star</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="galaxyport"><FONT COLOR="BLACK">galaxy: Galaxy</FONT></TD></TR></TABLE>>];
+"Galaxy" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;input&raquo;<BR/><B>Galaxy</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="nameport"><FONT COLOR="BLACK">name: String</FONT></TD></TR></TABLE>>];
+"SearchInput" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;input&raquo;<BR/><B>SearchInput</B></FONT></TD></TR><TR><TD ALIGN="CENTER" PORT="textport"><FONT COLOR="BLACK">text: String!</FONT></TD></TR>,<TR><TD ALIGN="CENTER" PORT="episodesport"><FONT COLOR="BLACK">episodes: [Episode]</FONT></TD></TR></TABLE>>];
+
+"SearchResult" [label=<<TABLE COLOR="BLACK" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD PORT="__title"><FONT COLOR="BLACK">&laquo;union&raquo;<BR/><B>SearchResult</B></FONT></TD></TR></TABLE>>];
+
+
+
+"Query":heroport -> "Character" [color="BLACK" fontcolor="BLACK"];
+"Episode" -> "Query" [color="BLACK" fontcolor="BLACK"];
+"Query":droidport -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"Query":searchport -> "SearchResult" [color="BLACK" fontcolor="BLACK"];
+"SearchInput" -> "Query" [color="BLACK" fontcolor="BLACK"];
+"Droid":friendsport -> "Character" [color="BLACK" fontcolor="BLACK"];
+"Droid":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"Star" -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"Human":friendsport -> "Character" [color="BLACK" fontcolor="BLACK"];
+"Human":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"Human":starshipsport -> "Starship" [color="BLACK" fontcolor="BLACK"];
+"LengthUnit" -> "Starship" [color="BLACK" fontcolor="BLACK"];
+"Character":appearsInport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"Character" -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"Character" -> "Human" [color="BLACK" fontcolor="BLACK"];
+"Star":galaxyport -> "Galaxy" [color="BLACK" fontcolor="BLACK"];
+"SearchInput":episodesport -> "Episode" [color="BLACK" fontcolor="BLACK"];
+"SearchResult" -> "Human" [color="BLACK" fontcolor="BLACK"];
+"SearchResult" -> "Droid" [color="BLACK" fontcolor="BLACK"];
+"SearchResult" -> "Starship" [color="BLACK" fontcolor="BLACK"];
+
+
+}

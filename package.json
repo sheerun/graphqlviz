@@ -16,6 +16,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "lint": "xo",
     "test": "xo && ava"
   },
   "files": [
@@ -29,10 +30,11 @@
   "dependencies": {
     "es6-promise": "~3.1.2",
     "get-stdin": "^5.0.1",
-    "graphql": "^0.4.18",
+    "graphql": "^0.9.1",
     "isomorphic-fetch": "~2.2.1",
     "lodash": "^4.6.1",
-    "meow": "^3.7.0"
+    "meow": "^3.7.0",
+    "rc": "^1.1.7"
   },
   "devDependencies": {
     "ava": "^0.13.0",

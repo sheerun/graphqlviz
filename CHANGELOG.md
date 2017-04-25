@@ -1,3 +1,7 @@
+# 2.0.1
+
+- Fixed url to unexisting swapi endpoint (docs)
+
 # 2.0.0
 
 - Add support for UNION, INTERFACE, INPUT_OBJECT and ENUM types

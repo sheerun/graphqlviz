@@ -10,7 +10,8 @@ test('render', t => {
   var output = fs
     .readFileSync(path.resolve(__dirname, 'test/output-noargs.dot'))
     .toString()
-  var computed = graphqlviz.render(input, {noargs: true}) + '\n'
+  var computed =
+    graphqlviz.render(input, {theme: {field: {noargs: true}}}) + '\n'
   t.same(computed, output)
 })
 
@@ -32,7 +33,7 @@ test('render with sort', t => {
   var output = fs
     .readFileSync(path.resolve(__dirname, 'test/output-sort.dot'))
     .toString()
-  var computed = graphqlviz.render(input, {sort: true}) + '\n'
+  var computed = graphqlviz.render(input, {theme: {field: {sort: true}}}) + '\n'
   t.same(computed, output)
 })
 
@@ -69,7 +70,7 @@ test('render with support for interface, union, and enum types', t => {
   t.same(computed, output)
 })
 
-test('render with config options inverted', t => {
+test.test('render with theme options inverted', t => {
   var input = fs
     .readFileSync(path.resolve(__dirname, 'test/complex-input.json'))
     .toString()
@@ -78,7 +79,7 @@ test('render with config options inverted', t => {
     .toString()
   var computed =
     graphqlviz.render(input, {
-      config: {
+      theme: {
         header: {
           invert: true
         },

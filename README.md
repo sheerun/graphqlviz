@@ -14,11 +14,10 @@ $ npm install -g graphqlviz
 GraphQL Server CLI visualizer
 
 Options:
-  -a, --noargs     render without field arguments
-  -v, --verbose    print introspection result
-  -s, --sort       sort fields
   -g, --graphql    use graphql schema language as input
-  --config         path to config file
+  -t, --theme      path to theme overrides
+  --print-theme    prints default theme to stdout
+  --verbose        print introspection result
 
 Usage
   $ graphqlviz [url]
@@ -28,80 +27,15 @@ Examples
   $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
   $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview
   $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
-  $ graphqlviz -g path/to/schema.graphql | dot -Tpng | open -f -a Preview
-  $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview
-```
-
-## Example NPM Scripts
-
-```
-  "scripts": {
-    "preprint": "type dot >/dev/null 2>&1 || { echo >&2 \"Please run `brew install graphviz`.  Aborting.\"; exit 1; }",
-    "print": "graphqlviz ./path/to/schema.graphql -g | dot -Tpdf | open -f -a Preview"
-  },
+  $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview
+  $ graphqlviz --print-theme > theme.json
+  $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview
+  $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png
 ```
 
 ## Customizing output
 
-Run `graphqlviz --help` for a full list of available customizations. Customizations can be applied either using arguments, or in a config file (if not supplied, `.graphqlvizrc` is used). All the available colors can be found on the [graphviz site](http://www.graphviz.org/doc/info/colors.html). The defaults are:
-
-```
-{
-  "header": {
-    "invert": false
-  },
-  "anchor": {
-    "header": false,
-    "input": false
-  },
-  "edgesToSelf": false,
-  "field": {
-    "align": "CENTER",
-    "hideSeperators": false,
-    "colorArgs": false
-  },
-  "edgeLabels": {
-    "input": "is input to",
-    "union": "",
-    "interface": "implemented by"
-  },
-  "types": {
-    "color": "BLACK",
-    "hide": false,
-    "group": false,
-    "groupLabel": "Types",
-    "stereotype": null
-  },
-  "inputs": {
-    "color": "BLACK",
-    "hide": false,
-    "group": false,
-    "groupLabel": "Input Types",
-    "stereotype": "input"
-  },
-  "enums": {
-    "color": "BLACK",
-    "hide": false,
-    "group": false,
-    "groupLabel": "Enum Types",
-    "stereotype": "enumeration"
-  },
-  "interfaces": {
-    "color": "BLACK",
-    "hide": false,
-    "group": false,
-    "groupLabel": "Interface Types",
-    "stereotype": "interface"
-  },
-  "unions": {
-    "color": "BLACK",
-    "hide": false,
-    "group": false,
-    "groupLabel": "Unions",
-    "stereotype": "union"
-  }
-}
-```
+You can print default theme with `graphqlviz --print-theme > theme.json`, then you can modify it, and pass with `--theme theme.json` argument. All the available colors can be found on the [graphviz site](http://www.graphviz.org/doc/info/colors.html). 
 
 ## Team
 

@@ -11,20 +11,13 @@ var parse = GraphQL.parse
 var buildASTSchema = GraphQL.buildASTSchema
 var graphqlviz = require('./')
 
-// since overrides come from cmd line, boolean defaults should be false
-// initiate the defaults with those pulled from the rc config files and command
-// line arguments, for example to modify `edgesToSelf` in the config, we can
-// use the argument `--edgesToSelf` { @see https://github.com/dominictarr/rc }
-var config = require('rc')('graphqlviz', graphqlviz.configDefaults)
-
 var cli = meow(
   [
     'Options:',
-    '  -a, --noargs     render without field arguments',
-    '  -v, --verbose    print introspection result',
-    '  -s, --sort       sort fields',
     '  -g, --graphql    use graphql schema language as input',
-    '  --config         config overrides (see Config)',
+    '  -t, --theme      path to theme overrides',
+    '  --print-theme    prints default theme to stdout',
+    '  --verbose        print introspection result',
     '',
     'Usage',
     '  $ graphqlviz [url]',
@@ -35,60 +28,22 @@ var cli = meow(
     '  $ graphqlviz http://graphql-swapi.parseapp.com | dot -Tpng | open -f -a Preview',
     '  $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview',
     '  $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview',
-    '  $ cat result.json | graphqlviz | dot -Tpng | open -f -a Preview',
-    '',
-    'Config',
-    '  --header.invert for type headers, shows white text on colored background',
-    "  --anchor.header when an edge points to a type, anchor to that type's header",
-    '  --anchor.input for input types, anchor the edge to the field that contains the input argument',
-    '  --edgesToSelf edges from an field to owning object will not be drawn',
-    '  --field.align [default=CENTER] aligns the text for all the fields',
-    '  --field.hideSeperators hides the lines between fields',
-    '  --field.colorArgs color the arguments of fields in the input type color',
-    '  --edgeLabels.input [default="is input to"] labels the edge for input types, and enums that are inputs into fields',
-    '  --edgeLabels.union [default=""] labels the edge for types that are included in a union',
-    '  --edgeLabels.interface [default="implemented by"] labels for the edges that link an interface to an implementaion',
-    '  --types.color [default="BLACK"] color for object types (excludes interface and union types)',
-    '  --types.hide hides object types in the output',
-    '  --types.group groups all object types together',
-    '  --types.groupLabel [default="Types"] the label for the group',
-    '  --types.stereotype [default=null] a subheader for this type',
-    '  --inputs.color [default="BLACK"] color for input types',
-    '  --inputs.hide hides input types in the output',
-    '  --inputs.group groups all input types together',
-    '  --inputs.groupLabel [default="Input Types"] the label for the group',
-    '  --inputs.stereotype [default="input"] a subheader for this type',
-    '  --enums.color [default="BLACK"] color for enum types',
-    '  --enums.hide hides enums in the output',
-    '  --enums.group groups all enum types together',
-    '  --enums.groupLabel [default="Enum Types"] the label for the group',
-    '  --enums.stereotype [default="enumeration"] a subheader for this type',
-    '  --interfaces.color [default="BLACK"] color for interface types',
-    '  --interfaces.hide hides interfaces in the output',
-    '  --interfaces.group groups all interface types together',
-    '  --interfaces.groupLabel [default="Interface Types"] the label for the group',
-    '  --interfaces.stereotype [default="interface"] a subheader for this type',
-    '  --unions.color [default="BLACK"] color for union types',
-    '  --unions.hide hides unions in the output',
-    '  --unions.group groups all union types together',
-    '  --unions.groupLabel [default="Union Types"] the label for the group',
-    '  --unions.stereotype [default="union"] a subheader for this type'
+    '  $ graphqlviz --print-theme > theme.json',
+    '  $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview',
+    '  $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png',
+    ' '
   ],
   {
     alias: {
       v: 'verbose',
-      a: 'noargs',
-      s: 'sort',
+      t: 'theme',
       g: 'graphql'
     }
   }
 )
 
-// build render options
-var opts = {
-  noargs: cli.flags.noargs,
-  sort: cli.flags.sort,
-  config: config
+if (cli.flags.theme && typeof cli.flags.theme === 'string') {
+  cli.flags.theme = JSON.parse(fs.readFileSync(cli.flags.theme))
 }
 
 // displays help and exits
@@ -132,13 +87,15 @@ function introspect (text) {
 
 if (cli.input[0] === 'query') {
   process.stdout.write(JSON.stringify({query: graphqlviz.query}) + '\n')
+} else if (cli.flags.printTheme) {
+  process.stdout.write(JSON.stringify(graphqlviz.theme, null, 2) + '\n')
 } else if (cli.input.length === 0) {
   getStdin().then(function (stdin) {
     if (stdin.trim() === '') {
       return terminate()
     }
     try {
-      console.log(graphqlviz.render(stdin, opts))
+      console.log(graphqlviz.render(stdin, cli.flags))
     } catch (e) {
       fatal(e, stdin)
     }
@@ -197,7 +154,7 @@ if (cli.input[0] === 'query') {
       process.exit(1)
     } else {
       try {
-        console.log(graphqlviz.render(executionResult, opts))
+        console.log(graphqlviz.render(executionResult, cli.flags))
       } catch (e) {
         fatal(e, JSON.stringify(executionResult, null, 2, 2))
       }

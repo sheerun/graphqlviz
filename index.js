@@ -5,7 +5,7 @@ var _ = require('lodash')
 var graphql = require('graphql')
 
 module.exports.query = graphql.introspectionQuery
-module.exports.configDefaults = {
+module.exports.theme = {
   header: {
     invert: false
   },
@@ -17,7 +17,9 @@ module.exports.configDefaults = {
   field: {
     align: 'CENTER',
     hideSeperators: false,
-    colorArgs: false
+    colorArgs: false,
+    sort: false,
+    noargs: false
   },
   edgeLabels: {
     input: '',
@@ -60,8 +62,6 @@ module.exports.configDefaults = {
     stereotype: 'union'
   }
 }
-
-var config = null
 
 // place to store templates so they only need to be created once
 var templates = {}
@@ -108,7 +108,7 @@ function processType (item, entities, types) {
 
   var additionalTypes = []
   // get the type names of the union or interface's possible types, given its type name
-  var addPossibleTypes = function (typeName) {
+  var addPossibleTypes = typeName => {
     var union = _.find(types, {name: typeName})
     var possibleTypes = _.map(union.possibleTypes, 'name')
 
@@ -116,19 +116,21 @@ function processType (item, entities, types) {
     additionalTypes = _.union(additionalTypes, possibleTypes, [typeName])
   }
 
-  var fields = _.map(type.fields, function (field) {
-    var obj = analyzeField(field)
+  var fields = _.map(type.fields, field => {
+    var obj = analyzeField.call(this, field)
 
     if (
-      (obj.isUnionType && !config.unions.hide) ||
-      (obj.isInterfaceType && !config.interfaces.hide)
+      (obj.isUnionType && !this.theme.unions.hide) ||
+      (obj.isInterfaceType && !this.theme.interfaces.hide)
     ) {
       addPossibleTypes(obj.type)
     }
 
     // process args
-    if (field.args && field.args.length) {
-      obj.args = _.map(field.args, analyzeField)
+    if (!this.theme.field.noargs) {
+      if (field.args && field.args.length) {
+        obj.args = _.map(field.args, analyzeField.bind(this))
+      }
     }
 
     return obj
@@ -156,7 +158,7 @@ function processType (item, entities, types) {
 // process a graphql input type object
 // returns simplified version of the input type
 function processEnumType (type) {
-  var fields = _.map(type.enumValues, function (enumValue) {
+  var fields = _.map(type.enumValues, enumValue => {
     var field = _.cloneDeep(enumValue)
     field.isEnumValue = true
     return field
@@ -171,7 +173,7 @@ function processEnumType (type) {
 // process a graphql input type object
 // returns simplified version of the input type
 function processInputType (type) {
-  var fields = _.map(type.inputFields, analyzeField)
+  var fields = _.map(type.inputFields, analyzeField.bind(this))
   return {
     name: type.name,
     isInputType: true,
@@ -184,14 +186,14 @@ function processInputType (type) {
 // if iter returns truthy, breaks & returns the value
 // assumes no cycles
 function walkBFS (obj, iter) {
-  var q = _.map(_.keys(obj), function (k) {
+  var q = _.map(_.keys(obj), k => {
     return {key: k, path: '["' + k + '"]'}
   })
 
   var current
   var currentNode
   var retval
-  var push = function (v, k) {
+  var push = (v, k) => {
     q.push({key: k, path: current.path + '["' + k + '"]'})
   }
   while (q.length) {
@@ -215,13 +217,13 @@ function getGraphRoot (root) {
   // that as the root. Otherwise root as the schema and treat
   // query/mutation/subscription as fields of that.
   var rootTypes = ['query', 'mutation', 'subscription']
-    .map(function (name) {
+    .map(name => {
       return {
         name: name,
         type: root[name + 'Type']
       }
     })
-    .filter(function (t) {
+    .filter(t => {
       return t.type
     })
 
@@ -236,7 +238,7 @@ function getGraphRoot (root) {
     q: [SchemaTypeSymbol],
     types: root.types.concat({
       name: SchemaTypeSymbol,
-      fields: rootTypes.map(function (rt) {
+      fields: rootTypes.map(rt => {
         return {
           name: rt.name,
           type: {
@@ -261,13 +263,13 @@ function getTypeDisplayName (typeName) {
 function isEnabled (obj) {
   var enabled = false
   if (obj.isEnumType) {
-    enabled = !config.enums.hide
+    enabled = !this.theme.enums.hide
   } else if (obj.isInputType) {
-    enabled = !config.inputs.hide
+    enabled = !this.theme.inputs.hide
   } else if (obj.isInterfaceType) {
-    enabled = !config.interfaces.hide
+    enabled = !this.theme.interfaces.hide
   } else if (obj.isUnionType) {
-    enabled = !config.unions.hide
+    enabled = !this.theme.unions.hide
   } else {
     enabled = true
   }
@@ -276,15 +278,15 @@ function isEnabled (obj) {
 
 // get the color for the given field
 function getColor (obj) {
-  var color = config.types.color
-  if (obj.isEnumType && !config.enums.hide) {
-    color = config.enums.color
-  } else if (obj.isInputType && !config.inputs.hide) {
-    color = config.inputs.color
-  } else if (obj.isInterfaceType && !config.interfaces.hide) {
-    color = config.interfaces.color
-  } else if (obj.isUnionType && !config.unions.hide) {
-    color = config.unions.color
+  var color = this.theme.types.color
+  if (obj.isEnumType && !this.theme.enums.hide) {
+    color = this.theme.enums.color
+  } else if (obj.isInputType && !this.theme.inputs.hide) {
+    color = this.theme.inputs.color
+  } else if (obj.isInterfaceType && !this.theme.interfaces.hide) {
+    color = this.theme.interfaces.color
+  } else if (obj.isUnionType && !this.theme.unions.hide) {
+    color = this.theme.unions.color
   }
   return color
 }
@@ -301,7 +303,7 @@ templates.edgeAttr = _.template(
 // would output:
 // `"Foo" -> "Bar"`
 function createEdge (input) {
-  var headerPort = config.anchor.header ? '__title' : null
+  var headerPort = this.theme.anchor.header ? '__title' : null
   var context = {
     leftNode: {
       name: input.from.typeName,
@@ -321,7 +323,7 @@ function createEdge (input) {
   // converts {a: 'FOO', bar: 2} to ['a="FOO"', 'bar=2'];
   var attributes = _.reduce(
     context.attributes,
-    function (result, value, name) {
+    (result, value, name) => {
       if (!_.isEmpty(value)) {
         result.push(templates.edgeAttr({name: name, value: value}))
       }
@@ -341,7 +343,7 @@ templates.fieldType = _.template(
 
 // creates the field text, including return type and arguments (colored if
 // `fields.colorArgs` is true)
-function createField (field, opts) {
+function createField (field) {
   var output = ''
   var notes = field.isDeprecated
     ? '<FONT COLOR="RED">' +
@@ -351,12 +353,12 @@ function createField (field, opts) {
   if (field.isEnumValue) {
     output = field.name + (notes ? ' ' + notes : '')
   } else {
-    var color = !config.inputs.hide && config.field.colorArgs
-      ? config.inputs.color
+    var color = !this.theme.inputs.hide && this.theme.field.colorArgs
+      ? this.theme.inputs.color
       : null
-    var args = opts.noargs
+    var args = this.theme.field.noargs
       ? []
-      : _.map(field.args, function (arg) {
+      : _.map(field.args, arg => {
           return (
             (color ? '<FONT COLOR="' + color + '">' : '') +
             arg.name +
@@ -383,9 +385,9 @@ function createTable (context) {
     '" BORDER="0" CELLBORDER="1" CELLSPACING="0">'
   result +=
     '<TR><TD PORT="__title"' +
-    (config.header.invert ? ' BGCOLOR="' + context.color + '"' : '') +
+    (this.theme.header.invert ? ' BGCOLOR="' + context.color + '"' : '') +
     '><FONT COLOR="' +
-    (config.header.invert ? 'WHITE' : context.color) +
+    (this.theme.header.invert ? 'WHITE' : context.color) +
     '">' +
     (_.isEmpty(context.stereotype) || context.stereotype === 'null'
       ? ''
@@ -394,16 +396,16 @@ function createTable (context) {
     context.typeName +
     '</B></FONT></TD></TR>'
   if (context.rows.length) {
-    if (config.field.hideSeperators) {
+    if (this.theme.field.hideSeperators) {
       result +=
         '<TR><TD><TABLE COLOR="' +
         context.color +
         '" BORDER="0" CELLBORDER="0" CELLSPACING="0">'
     }
-    result += context.rows.map(function (row) {
+    result += context.rows.map(row => {
       return (
         '<TR><TD ALIGN="' +
-        config.field.align +
+        this.theme.field.align +
         '" PORT="' +
         row.port +
         '"><FONT COLOR="' +
@@ -413,7 +415,7 @@ function createTable (context) {
         '</FONT></TD></TR>'
       )
     })
-    if (config.field.hideSeperators) {
+    if (this.theme.field.hideSeperators) {
       result += '</TABLE></TD></TR>'
     }
   }
@@ -425,41 +427,41 @@ var groupId = 0
 
 // For the provided simplified types, creates all the tables to represent them.
 // Optionally groups the supplied types in a subgraph.
-function graph (processedTypes, typeConfig, opts) {
+function graph (processedTypes, typeTheme) {
   var result = ''
 
-  if (typeConfig.group) {
+  if (typeTheme.group) {
     result += 'subgraph cluster_' + groupId++ + ' {'
-    if (typeConfig.color) {
-      result += 'color=' + typeConfig.color + ';'
+    if (typeTheme.color) {
+      result += 'color=' + typeTheme.color + ';'
     }
-    if (typeConfig.groupLabel) {
-      result += 'label="' + typeConfig.groupLabel + '";'
+    if (typeTheme.groupLabel) {
+      result += 'label="' + typeTheme.groupLabel + '";'
     }
   }
 
-  result += _.map(processedTypes, function (v) {
+  result += _.map(processedTypes, v => {
     // sort if desired
-    if (opts.sort) {
+    if (this.theme.field.sort) {
       v.fields = _.sortBy(v.fields, 'name')
     }
 
-    var rows = _.map(v.fields, function (v) {
+    var rows = _.map(v.fields, v => {
       return {
-        text: createField(v, opts),
+        text: createField.call(this, v),
         port: v.name + 'port'
       }
     })
 
-    return createTable({
+    return createTable.call(this, {
       typeName: getTypeDisplayName(v.name),
-      color: typeConfig.color,
-      stereotype: typeConfig.stereotype,
+      color: typeTheme.color,
+      stereotype: typeTheme.stereotype,
       rows: rows
     })
   }).join('\n')
 
-  if (typeConfig.group) {
+  if (typeTheme.group) {
     result += '}'
   }
 
@@ -469,10 +471,7 @@ function graph (processedTypes, typeConfig, opts) {
 
 // For the provided schema (introspection result), generate Graphviz dot
 // language output { @see http://www.graphviz.org/pdf/dotguide.pdf }
-module.exports.render = function (schema, opts) {
-  opts = opts || {}
-  config = opts.config || module.exports.configDefaults
-
+function instanceRender (schema, opts) {
   if (_.isString(schema)) {
     schema = JSON.parse(schema)
   }
@@ -482,7 +481,7 @@ module.exports.render = function (schema, opts) {
   }
 
   // find entry points
-  var rootPath = walkBFS(schema, function (v, k, p) {
+  var rootPath = walkBFS.call(this, schema, (v, k, p) => {
     if (k === '__schema') {
       return p
     }
@@ -493,7 +492,7 @@ module.exports.render = function (schema, opts) {
   }
 
   var root = _.get(schema, rootPath)
-  var graphRoot = getGraphRoot(root)
+  var graphRoot = getGraphRoot.call(this, root)
   var q = graphRoot.q
   var types = graphRoot.types
 
@@ -510,27 +509,27 @@ module.exports.render = function (schema, opts) {
     }
 
     // process item
-    q = q.concat(processType(current, entities, types))
+    q = q.concat(processType.call(this, current, entities, types))
   }
 
   // process all the enum fields
-  var enums = config.enums.hide
+  var enums = this.theme.enums.hide
     ? []
     : _.chain(types)
-        .filter(function (type) {
+        .filter(type => {
           return type.kind === 'ENUM' && !_.startsWith(type.name, '__')
         })
-        .map(processEnumType)
+        .map(processEnumType.bind(this))
         .value()
 
   // process all the input fields
-  var inputs = config.inputs.hide
+  var inputs = this.theme.inputs.hide
     ? []
     : _.chain(types)
-        .filter(function (type) {
+        .filter(type => {
           return type.kind === 'INPUT_OBJECT' && !_.startsWith(type.name, '__')
         })
-        .map(processInputType)
+        .map(processInputType.bind(this))
         .value()
 
   var interfaces = _.filter(entities, {
@@ -559,11 +558,11 @@ module.exports.render = function (schema, opts) {
     'edge [\n' +
     '];\n'
 
-  dotfile += graph(objects, config.types, opts)
-  dotfile += graph(enums, config.enums, opts)
-  dotfile += graph(interfaces, config.interfaces, opts)
-  dotfile += graph(inputs, config.inputs, opts)
-  dotfile += graph(unions, config.unions, opts)
+  dotfile += graph.call(this, objects, this.theme.types)
+  dotfile += graph.call(this, enums, this.theme.enums)
+  dotfile += graph.call(this, interfaces, this.theme.interfaces)
+  dotfile += graph.call(this, inputs, this.theme.inputs)
+  dotfile += graph.call(this, unions, this.theme.unions)
 
   dotfile += '\n\n'
 
@@ -575,17 +574,17 @@ module.exports.render = function (schema, opts) {
 
   dotfile += _.reduce(
     processedTypes,
-    function (result, processedType) {
+    (result, processedType) => {
       if (!processedType.isEnumType) {
-        _.each(processedType.fields, function (field) {
+        _.each(processedType.fields, field => {
           var fieldType = processedTypes[field.type]
           if (
             fieldType &&
-            isEnabled(fieldType) &&
-            (config.edgesToSelf || processedType.name !== fieldType.name)
+            isEnabled.call(this, fieldType) &&
+            (this.theme.edgesToSelf || processedType.name !== fieldType.name)
           ) {
             result.push(
-              createEdge({
+              createEdge.call(this, {
                 from: {
                   typeName: getTypeDisplayName(processedType.name),
                   fieldName: field.name
@@ -593,31 +592,31 @@ module.exports.render = function (schema, opts) {
                 to: {
                   typeName: getTypeDisplayName(fieldType.name)
                 },
-                color: getColor(field)
+                color: getColor.call(this, field)
               })
             )
           }
-          if (!opts.noargs && field.args && field.args.length) {
-            _.each(field.args, function (arg) {
+          if (!this.theme.field.noargs && field.args && field.args.length) {
+            _.each(field.args, arg => {
               var argType = processedTypes[arg.type]
               if (
                 argType &&
-                isEnabled(argType) &&
-                (config.edgesToSelf || argType.name !== processedType.name)
+                isEnabled.call(this, argType) &&
+                (this.theme.edgesToSelf || argType.name !== processedType.name)
               ) {
                 result.push(
-                  createEdge({
+                  createEdge.call(this, {
                     from: {
                       typeName: getTypeDisplayName(argType.name)
                     },
                     to: {
                       typeName: getTypeDisplayName(processedType.name),
-                      fieldName: config.anchor.input ? field.name : null
+                      fieldName: this.theme.anchor.input ? field.name : null
                     },
-                    label: config.edgeLabels.input,
-                    color: config.inputs.hide
-                      ? getColor(argType)
-                      : config.inputs.color,
+                    label: this.theme.edgeLabels.input,
+                    color: this.theme.inputs.hide
+                      ? getColor.call(this, argType)
+                      : this.theme.inputs.color,
                     weight: 1000
                   })
                 )
@@ -625,15 +624,15 @@ module.exports.render = function (schema, opts) {
             })
           }
         })
-        _.each(processedType.possibleTypes, function (possibleTypeName) {
+        _.each(processedType.possibleTypes, possibleTypeName => {
           var possibleType = _.find(entities, {name: possibleTypeName})
           if (
             possibleType &&
-            isEnabled(possibleType) &&
-            (config.edgesToSelf || processedType.name !== possibleType.name)
+            isEnabled.call(this, possibleType) &&
+            (this.theme.edgesToSelf || processedType.name !== possibleType.name)
           ) {
             result.push(
-              createEdge({
+              createEdge.call(this, {
                 from: {
                   typeName: getTypeDisplayName(processedType.name)
                 },
@@ -641,9 +640,9 @@ module.exports.render = function (schema, opts) {
                   typeName: getTypeDisplayName(possibleType.name)
                 },
                 label: processedType.isUnionType
-                  ? config.edgeLabels.union
-                  : config.edgeLabels.interface,
-                color: getColor(possibleType)
+                  ? this.theme.edgeLabels.union
+                  : this.theme.edgeLabels.interface,
+                color: getColor.call(this, possibleType)
               })
             )
           }
@@ -659,4 +658,16 @@ module.exports.render = function (schema, opts) {
   dotfile += '\n}'
 
   return dotfile
+}
+
+module.exports.render = (schema, opts) => {
+  opts = opts || {}
+
+  return instanceRender.call(
+    {
+      theme: _.merge({}, module.exports.theme, opts.theme || {})
+    },
+    schema,
+    opts
+  )
 }

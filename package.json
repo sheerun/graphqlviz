@@ -16,8 +16,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "lint": "xo",
-    "test": "xo && ava"
+    "format": "prettier-standard *.js",
+    "test": "ava"
   },
   "files": [
     "index.js",
@@ -38,10 +38,6 @@
   },
   "devDependencies": {
     "ava": "^0.13.0",
-    "xo": "^0.12.1"
-  },
-  "xo": {
-    "space": 2,
-    "semicolon": true
+    "prettier-standard": "^4.1.0"
   }
 }

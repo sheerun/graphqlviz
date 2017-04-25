@@ -4,6 +4,7 @@
 
 # 2.0.0
 
+- Drop support for node 0.10 and 0.12
 - Add support for UNION, INTERFACE, INPUT_OBJECT and ENUM types
 - Show mutation/subscription rooted at virtual "Schema" type.
 - Add ability to use graphql schema language files as input

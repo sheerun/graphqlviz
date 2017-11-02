@@ -28,10 +28,10 @@
     "graphql"
   ],
   "dependencies": {
+    "cross-fetch": "~1.1.0",
     "es6-promise": "~3.1.2",
     "get-stdin": "^5.0.1",
     "graphql": "^0.9.1",
-    "isomorphic-fetch": "~2.2.1",
     "lodash": "^4.6.1",
     "meow": "^3.7.0"
   },

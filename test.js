@@ -12,7 +12,7 @@ test('render', t => {
     .toString()
   var computed =
     graphqlviz.render(input, {theme: {field: {noargs: true}}}) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })
 
 test('render with args', t => {
@@ -23,7 +23,7 @@ test('render with args', t => {
     .readFileSync(path.resolve(__dirname, 'test/output.dot'))
     .toString()
   var computed = graphqlviz.render(input, {}) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })
 
 test('render with sort', t => {
@@ -34,7 +34,7 @@ test('render with sort', t => {
     .readFileSync(path.resolve(__dirname, 'test/output-sort.dot'))
     .toString()
   var computed = graphqlviz.render(input, {theme: {field: {sort: true}}}) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })
 
 test('render with support for NON_NULL lists', t => {
@@ -45,7 +45,7 @@ test('render with support for NON_NULL lists', t => {
     .readFileSync(path.resolve(__dirname, 'test/simple-output.dot'))
     .toString()
   var computed = graphqlviz.render(input, {}) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })
 
 test('render with support for mutationType', t => {
@@ -56,7 +56,7 @@ test('render with support for mutationType', t => {
     .readFileSync(path.resolve(__dirname, 'test/query-mutation-output.dot'))
     .toString()
   var computed = graphqlviz.render(input, {}) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })
 
 test('render with support for interface, union, and enum types', t => {
@@ -67,7 +67,7 @@ test('render with support for interface, union, and enum types', t => {
     .readFileSync(path.resolve(__dirname, 'test/complex-output.dot'))
     .toString()
   var computed = graphqlviz.render(input) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })
 
 test.test('render with theme options inverted', t => {
@@ -135,5 +135,5 @@ test.test('render with theme options inverted', t => {
         }
       }
     }) + '\n'
-  t.same(computed, output)
+  t.deepEqual(computed, output)
 })

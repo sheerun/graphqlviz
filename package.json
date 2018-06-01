@@ -28,15 +28,15 @@
     "graphql"
   ],
   "dependencies": {
-    "es6-promise": "~3.1.2",
-    "get-stdin": "^5.0.1",
-    "graphql": "^0.9.1",
+    "es6-promise": "~4.2.4",
+    "get-stdin": "^6.0.0",
+    "graphql": "^0.13.2",
     "isomorphic-fetch": "~2.2.1",
     "lodash": "^4.6.1",
-    "meow": "^3.7.0"
+    "meow": "^5.0.0"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
-    "prettier-standard": "^4.1.0"
+    "ava": "^0.25.0",
+    "prettier-standard": "^8.0.1"
   }
 }

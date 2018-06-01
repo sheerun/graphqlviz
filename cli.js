@@ -11,36 +11,41 @@ var parse = GraphQL.parse
 var buildASTSchema = GraphQL.buildASTSchema
 var graphqlviz = require('./')
 
-var cli = meow(
-  [
-    'Options:',
-    '  -g, --graphql    use graphql schema language as input',
-    '  -t, --theme      path to theme overrides',
-    '  --print-theme    prints default theme to stdout',
-    '  --verbose        print introspection result',
-    '',
-    'Usage',
-    '  $ graphqlviz [url]',
-    '      Renders dot schema from [url] endpoint',
-    '',
-    'Examples',
-    '  $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png',
-    '  $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview',
-    '  $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview',
-    '  $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview',
-    '  $ graphqlviz --print-theme > theme.json',
-    '  $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview',
-    '  $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png',
-    ' '
-  ],
-  {
-    alias: {
-      v: 'verbose',
-      t: 'theme',
-      g: 'graphql'
+var cli = meow(`
+    Options:
+      -g --graphql    use graphql schema language as input
+      -t --theme      path to theme overrides
+      --print-theme   print default theme to stdout
+      -v --verbose    print introspection result
+
+    Usage:
+      $ graphqlviz [url]
+          Renders dot schema from [url] endpoint
+
+    Examples:
+      $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
+      $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview
+      $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
+      $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview
+      $ graphqlviz --print-theme > theme.json
+      $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview
+      $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png
+`, {
+  flags: {
+    verbose: {
+      type: 'boolean',
+      alias: 'v'
+    },
+    theme: {
+      type: 'string',
+      alias: 't'
+    },
+    graphql: {
+      type: 'boolean',
+      alias: 'g'
     }
   }
-)
+})
 
 if (cli.flags.theme && typeof cli.flags.theme === 'string') {
   cli.flags.theme = JSON.parse(fs.readFileSync(cli.flags.theme))

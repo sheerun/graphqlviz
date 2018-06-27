@@ -128,8 +128,11 @@ if (cli.input[0] === 'query') {
       headers: headers,
       body: JSON.stringify({query: graphqlviz.query})
     }).then(function (res) {
-      return res.text()
-    })
+      if (!res.ok && cli.flags.verbose) {
+        console.log('Request for schema failed w/ ' + res.status + ' (' + res.statusText + ')');
+      }
+      return res.text();
+    });
   } else {
     // if not http, try local file
     p = new Promise(function (resolve, reject) {

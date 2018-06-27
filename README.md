@@ -33,6 +33,8 @@ Examples
   $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png
 ```
 
+Note that `dot` is `graphviz`'s tool to produce layered drawings of directed graphs. `graphviz` is available through most package managers including homebrew and apt-get. Details here https://www.graphviz.org/download/
+
 ## Customizing output
 
 You can print default theme with `graphqlviz --print-theme > theme.json`, then you can modify it, and pass with `--theme theme.json` argument. All the available colors can be found on the [graphviz site](http://www.graphviz.org/doc/info/colors.html). 

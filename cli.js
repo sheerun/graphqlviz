@@ -17,6 +17,7 @@ var cli = meow(`
       -t --theme      path to theme overrides
       --print-theme   print default theme to stdout
       -v --verbose    print introspection result
+      -a --auth       set Authorization header for graphql server
 
     Usage:
       $ graphqlviz [url]
@@ -24,6 +25,7 @@ var cli = meow(`
 
     Examples:
       $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
+      $ graphqlviz https://www.mypublicautheddomain.com/graphql -a "Bearer xxxxx" | dot -Tpng -o graph.png
       $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview
       $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
       $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview
@@ -43,6 +45,10 @@ var cli = meow(`
     graphql: {
       type: 'boolean',
       alias: 'g'
+    },
+    auth: {
+      type: 'string',
+      alias: 'a'
     }
   }
 })
@@ -110,12 +116,16 @@ if (cli.input[0] === 'query') {
 
   // otherwise http(s)
   if (cli.input[0].slice(0, 4) === 'http') {
+    var headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    };
+    if (cli.flags.auth) {
+      headers.Authorization = cli.flags.auth;
+    }
     p = fetch(cli.input[0], {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers,
       body: JSON.stringify({query: graphqlviz.query})
     }).then(function (res) {
       return res.text()

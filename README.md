@@ -33,7 +33,7 @@ Examples
   $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png
 ```
 
-Note that `dot` is `graphviz`'s tool to produce layered drawings of directed graphs. `graphviz` is available through most package managers including homebrew and apt-get. Details here https://www.graphviz.org/download/
+Note that `dot` is `graphviz`'s tool to produce layered drawings of directed graphs. `graphviz` is available through most package managers including homebrew and apt-get. Details here: https://www.graphviz.org/download/
 
 ## Customizing output
 

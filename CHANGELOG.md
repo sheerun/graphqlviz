@@ -1,3 +1,7 @@
+# 2.1.0
+
+- Allow for auth header
+
 # 2.0.1
 
 - Fixed url to unexisting swapi endpoint (docs)

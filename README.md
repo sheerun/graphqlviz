@@ -39,6 +39,10 @@ Note that `dot` is `graphviz`'s tool to produce layered drawings of directed gra
 
 You can print default theme with `graphqlviz --print-theme > theme.json`, then you can modify it, and pass with `--theme theme.json` argument. All the available colors can be found on the [graphviz site](http://www.graphviz.org/doc/info/colors.html). 
 
+## Windows Users
+
+Windows users looking use the `dot` command should download & install from the [graphviz website](https://graphviz.gitlab.io/_pages/Download/Download_windows.html) and ensure the installation location is on the system `PATH`. It has been reported that, for at least some windows versions, the `msi` does not automatically add the installation to the `PATH`. Alternatively the executables can be invoked directly. The installation location will likely be similar to `C:\Program Files (x86)\Graphviz2.38\bin\`.
+
 ## Team
 
 [![Adam Stankiewicz](https://avatars3.githubusercontent.com/u/292365?s=130)](https://sheerun.net) | [![Nathan Smith](https://avatars1.githubusercontent.com/u/1530197?s=130)](http://nathanrandal.com/) | [![Join](https://s28.postimg.org/hcy7aq9nh/42.png)](https://github.com/sheerun/graphqlviz/pulls)

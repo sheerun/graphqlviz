@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 require('es6-promise').polyfill()
-var fetch = require('isomorphic-fetch')
+var fetch = require('cross-fetch')
 var meow = require('meow')
 var fs = require('fs')
 var getStdin = require('get-stdin')
@@ -25,7 +25,7 @@ var cli = meow(`
 
     Examples:
       $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
-      $ graphqlviz https://www.mypublicautheddomain.com/graphql -a "Bearer xxxxx" | dot -Tpng -o graph.png
+      $ graphqlviz https://example.com/graphql -a "Bearer xxxxx" | dot -Tpng -o graph.png
       $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview
       $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
       $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview

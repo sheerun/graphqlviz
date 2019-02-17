@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-require('es6-promise').polyfill()
 var fetch = require('cross-fetch')
 var meow = require('meow')
 var fs = require('fs')

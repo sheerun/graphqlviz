@@ -11,7 +11,7 @@ test('render', t => {
     .readFileSync(path.resolve(__dirname, 'test/output-noargs.dot'))
     .toString()
   var computed =
-    graphqlviz.render(input, {theme: {field: {noargs: true}}}) + '\n'
+    graphqlviz.render(input, { theme: { field: { noargs: true } } }) + '\n'
   t.deepEqual(computed, output)
 })
 
@@ -33,7 +33,8 @@ test('render with sort', t => {
   var output = fs
     .readFileSync(path.resolve(__dirname, 'test/output-sort.dot'))
     .toString()
-  var computed = graphqlviz.render(input, {theme: {field: {sort: true}}}) + '\n'
+  var computed =
+    graphqlviz.render(input, { theme: { field: { sort: true } } }) + '\n'
   t.deepEqual(computed, output)
 })
 

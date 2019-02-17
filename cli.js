@@ -11,7 +11,8 @@ var parse = GraphQL.parse
 var buildASTSchema = GraphQL.buildASTSchema
 var graphqlviz = require('./')
 
-var cli = meow(`
+var cli = meow(
+  `
     Options:
       -g --graphql    use graphql schema language as input
       -t --theme      path to theme overrides
@@ -32,26 +33,28 @@ var cli = meow(`
       $ graphqlviz --print-theme > theme.json
       $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview
       $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png
-`, {
-  flags: {
-    verbose: {
-      type: 'boolean',
-      alias: 'v'
-    },
-    theme: {
-      type: 'string',
-      alias: 't'
-    },
-    graphql: {
-      type: 'boolean',
-      alias: 'g'
-    },
-    auth: {
-      type: 'string',
-      alias: 'a'
+`,
+  {
+    flags: {
+      verbose: {
+        type: 'boolean',
+        alias: 'v'
+      },
+      theme: {
+        type: 'string',
+        alias: 't'
+      },
+      graphql: {
+        type: 'boolean',
+        alias: 'g'
+      },
+      auth: {
+        type: 'string',
+        alias: 'a'
+      }
     }
   }
-})
+)
 
 if (cli.flags.theme && typeof cli.flags.theme === 'string') {
   cli.flags.theme = JSON.parse(fs.readFileSync(cli.flags.theme))
@@ -97,7 +100,7 @@ function introspect (text) {
 }
 
 if (cli.input[0] === 'query') {
-  process.stdout.write(JSON.stringify({query: graphqlviz.query}) + '\n')
+  process.stdout.write(JSON.stringify({ query: graphqlviz.query }) + '\n')
 } else if (cli.flags.printTheme) {
   process.stdout.write(JSON.stringify(graphqlviz.theme, null, 2) + '\n')
 } else if (cli.input.length === 0) {
@@ -119,24 +122,30 @@ if (cli.input[0] === 'query') {
     var headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json'
-    };
+    }
     if (cli.flags.auth) {
-      headers.Authorization = cli.flags.auth;
+      headers.Authorization = cli.flags.auth
     }
     p = fetch(cli.input[0], {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({query: graphqlviz.query})
+      body: JSON.stringify({ query: graphqlviz.query })
     }).then(function (res) {
       if (!res.ok && cli.flags.verbose) {
-        console.log('Request for schema failed w/ ' + res.status + ' (' + res.statusText + ')');
+        console.log(
+          'Request for schema failed w/ ' +
+            res.status +
+            ' (' +
+            res.statusText +
+            ')'
+        )
       }
-      return res.text();
-    });
+      return res.text()
+    })
   } else {
     // if not http, try local file
     p = new Promise(function (resolve, reject) {
-      fs.readFile(cli.input[0], {encoding: 'utf8'}, function (err, data) {
+      fs.readFile(cli.input[0], { encoding: 'utf8' }, function (err, data) {
         if (err) {
           reject(err)
           fatal(err, data)

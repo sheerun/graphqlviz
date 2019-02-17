@@ -104,12 +104,12 @@ function analyzeField (field) {
 // process a graphql type object
 // returns simplified version of the type
 function processType (item, entities, types) {
-  var type = _.find(types, {name: item})
+  var type = _.find(types, { name: item })
 
   var additionalTypes = []
   // get the type names of the union or interface's possible types, given its type name
   var addPossibleTypes = typeName => {
-    var union = _.find(types, {name: typeName})
+    var union = _.find(types, { name: typeName })
     var possibleTypes = _.map(union.possibleTypes, 'name')
 
     // we must also process the union/interface type, as well as its possible types
@@ -187,14 +187,14 @@ function processInputType (type) {
 // assumes no cycles
 function walkBFS (obj, iter) {
   var q = _.map(_.keys(obj), k => {
-    return {key: k, path: '["' + k + '"]'}
+    return { key: k, path: '["' + k + '"]' }
   })
 
   var current
   var currentNode
   var retval
   var push = (v, k) => {
-    q.push({key: k, path: current.path + '["' + k + '"]'})
+    q.push({ key: k, path: current.path + '["' + k + '"]' })
   }
   while (q.length) {
     current = q.shift()
@@ -325,13 +325,13 @@ function createEdge (input) {
     context.attributes,
     (result, value, name) => {
       if (!_.isEmpty(value)) {
-        result.push(templates.edgeAttr({name: name, value: value}))
+        result.push(templates.edgeAttr({ name: name, value: value }))
       }
       return result
     },
     []
   )
-  return templates.edge(_.merge({}, context, {attributes: attributes}))
+  return templates.edge(_.merge({}, context, { attributes: attributes }))
 }
 
 templates.field = _.template(
@@ -347,15 +347,16 @@ function createField (field) {
   var output = ''
   var notes = field.isDeprecated
     ? '<FONT COLOR="RED">' +
-        (field.deprecationReason || 'Deprecated') +
-        '</FONT>'
+      (field.deprecationReason || 'Deprecated') +
+      '</FONT>'
     : ''
   if (field.isEnumValue) {
     output = field.name + (notes ? ' ' + notes : '')
   } else {
-    var color = !this.theme.inputs.hide && this.theme.field.colorArgs
-      ? this.theme.inputs.color
-      : null
+    var color =
+      !this.theme.inputs.hide && this.theme.field.colorArgs
+        ? this.theme.inputs.color
+        : null
     var args = this.theme.field.noargs
       ? []
       : _.map(field.args, arg => {
@@ -369,7 +370,7 @@ function createField (field) {
         })
     var type = templates.fieldType(field)
     output = templates.field(
-      _.merge({}, field, {args: args, notes: notes, type: type})
+      _.merge({}, field, { args: args, notes: notes, type: type })
     )
   }
   return output
@@ -625,7 +626,7 @@ function instanceRender (schema, opts) {
           }
         })
         _.each(processedType.possibleTypes, possibleTypeName => {
-          var possibleType = _.find(entities, {name: possibleTypeName})
+          var possibleType = _.find(entities, { name: possibleTypeName })
           if (
             possibleType &&
             isEnabled.call(this, possibleType) &&

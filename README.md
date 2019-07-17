@@ -18,6 +18,7 @@ Options:
   -t, --theme      path to theme overrides
   --print-theme    prints default theme to stdout
   --verbose        print introspection result
+  -a --auth       set Authorization header for graphql server
 
 Usage
   $ graphqlviz [url]
@@ -25,6 +26,7 @@ Usage
 
 Examples
   $ graphqlviz https://localhost:3000 | dot -Tpng -o graph.png
+  $ graphqlviz https://localhost:3000 -a "Bearer xxxxx" | dot -Tpng -o graph.png
   $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview
   $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
   $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview

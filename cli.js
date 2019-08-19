@@ -137,7 +137,7 @@ if (cli.input[0] === 'query') {
         )
       }
       return res.text()
-    });
+    })
   } else {
     // if not http, try local file
     p = new Promise(function (resolve, reject) {

@@ -102,22 +102,19 @@ if (cli.input[0] === 'query') {
   process.stdout.write(JSON.stringify({ query: graphqlviz.query }) + '\n')
 } else if (cli.flags.printTheme) {
   process.stdout.write(JSON.stringify(graphqlviz.theme, null, 2) + '\n')
-} else if (cli.input.length === 0) {
-  getStdin().then(function (stdin) {
-    if (stdin.trim() === '') {
-      return terminate()
-    }
-    try {
-      console.log(graphqlviz.render(stdin, cli.flags))
-    } catch (e) {
-      fatal(e, stdin)
-    }
-  })
-} else if (cli.input.length === 1) {
+} else {
   var p
 
-  // otherwise http(s)
-  if (cli.input[0].slice(0, 4) === 'http') {
+  if (cli.input.length === 0) {
+    // stdin
+    p = getStdin().then(function (stdin) {
+      if (stdin.trim() === '') {
+        return terminate()
+      }
+      return stdin
+    });
+  } else if (cli.input[0].slice(0, 4) === 'http') {
+    // otherwise http(s)
     var headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json'
@@ -140,7 +137,7 @@ if (cli.input[0] === 'query') {
         )
       }
       return res.text()
-    })
+    });
   } else {
     // if not http, try local file
     p = new Promise(function (resolve, reject) {
@@ -186,6 +183,4 @@ if (cli.input[0] === 'query') {
       }
     }
   })
-} else {
-  terminate()
 }

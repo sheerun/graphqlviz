@@ -71,7 +71,7 @@ test('render with support for interface, union, and enum types', t => {
   t.deepEqual(computed, output)
 })
 
-test.test('render with theme options inverted', t => {
+test('render with theme options inverted', t => {
   var input = fs
     .readFileSync(path.resolve(__dirname, 'test/complex-input.json'))
     .toString()

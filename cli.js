@@ -105,7 +105,7 @@ if (cli.input[0] === 'query') {
 } else {
   var p
 
-  if (cli.input.length === 0) {
+  if (!process.stdin.isTTY) {
     // stdin
     p = getStdin().then(function (stdin) {
       if (stdin.trim() === '') {
@@ -113,43 +113,47 @@ if (cli.input[0] === 'query') {
       }
       return stdin
     });
-  } else if (cli.input[0].slice(0, 4) === 'http') {
-    // otherwise http(s)
-    var headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-    if (cli.flags.auth) {
-      headers.Authorization = cli.flags.auth
-    }
-    p = fetch(cli.input[0], {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({ query: graphqlviz.query })
-    }).then(function (res) {
-      if (!res.ok && cli.flags.verbose) {
-        console.log(
-          'Request for schema failed w/ ' +
+  } else if (cli.input.length === 1) {
+    if (cli.input[0].slice(0, 4) === 'http') {
+      // otherwise http(s)
+      var headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+      if (cli.flags.auth) {
+        headers.Authorization = cli.flags.auth
+      }
+      p = fetch(cli.input[0], {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ query: graphqlviz.query })
+      }).then(function (res) {
+        if (!res.ok && cli.flags.verbose) {
+          console.log(
+            'Request for schema failed w/ ' +
             res.status +
             ' (' +
             res.statusText +
             ')'
-        )
-      }
-      return res.text()
-    })
-  } else {
-    // if not http, try local file
-    p = new Promise(function (resolve, reject) {
-      fs.readFile(cli.input[0], { encoding: 'utf8' }, function (err, data) {
-        if (err) {
-          reject(err)
-          fatal(err, data)
-        } else {
-          resolve(data)
+          )
         }
+        return res.text()
       })
-    })
+    } else {
+      // if not http, try local file
+      p = new Promise(function (resolve, reject) {
+        fs.readFile(cli.input[0], { encoding: 'utf8' }, function (err, data) {
+          if (err) {
+            reject(err)
+            fatal(err, data)
+          } else {
+            resolve(data)
+          }
+        })
+      })
+    }
+  } else {
+    terminate()
   }
 
   // after getting text, try to parse as JSON and process, or use graphql to process a "graphql schema language" file

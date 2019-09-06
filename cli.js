@@ -102,57 +102,58 @@ if (cli.input[0] === 'query') {
   process.stdout.write(JSON.stringify({ query: graphqlviz.query }) + '\n')
 } else if (cli.flags.printTheme) {
   process.stdout.write(JSON.stringify(graphqlviz.theme, null, 2) + '\n')
-} else if (cli.input.length === 0) {
-  getStdin().then(function (stdin) {
-    if (stdin.trim() === '') {
-      return terminate()
-    }
-    try {
-      console.log(graphqlviz.render(stdin, cli.flags))
-    } catch (e) {
-      fatal(e, stdin)
-    }
-  })
-} else if (cli.input.length === 1) {
+} else {
   var p
 
-  // otherwise http(s)
-  if (cli.input[0].slice(0, 4) === 'http') {
-    var headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-    if (cli.flags.auth) {
-      headers.Authorization = cli.flags.auth
-    }
-    p = fetch(cli.input[0], {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({ query: graphqlviz.query })
-    }).then(function (res) {
-      if (!res.ok && cli.flags.verbose) {
-        console.log(
-          'Request for schema failed w/ ' +
+  if (!process.stdin.isTTY) {
+    // stdin
+    p = getStdin().then(function (stdin) {
+      if (stdin.trim() === '') {
+        return terminate()
+      }
+      return stdin
+    });
+  } else if (cli.input.length === 1) {
+    if (cli.input[0].slice(0, 4) === 'http') {
+      // otherwise http(s)
+      var headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+      if (cli.flags.auth) {
+        headers.Authorization = cli.flags.auth
+      }
+      p = fetch(cli.input[0], {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ query: graphqlviz.query })
+      }).then(function (res) {
+        if (!res.ok && cli.flags.verbose) {
+          console.log(
+            'Request for schema failed w/ ' +
             res.status +
             ' (' +
             res.statusText +
             ')'
-        )
-      }
-      return res.text()
-    })
-  } else {
-    // if not http, try local file
-    p = new Promise(function (resolve, reject) {
-      fs.readFile(cli.input[0], { encoding: 'utf8' }, function (err, data) {
-        if (err) {
-          reject(err)
-          fatal(err, data)
-        } else {
-          resolve(data)
+          )
         }
+        return res.text()
       })
-    })
+    } else {
+      // if not http, try local file
+      p = new Promise(function (resolve, reject) {
+        fs.readFile(cli.input[0], { encoding: 'utf8' }, function (err, data) {
+          if (err) {
+            reject(err)
+            fatal(err, data)
+          } else {
+            resolve(data)
+          }
+        })
+      })
+    }
+  } else {
+    terminate()
   }
 
   // after getting text, try to parse as JSON and process, or use graphql to process a "graphql schema language" file
@@ -186,6 +187,4 @@ if (cli.input[0] === 'query') {
       }
     }
   })
-} else {
-  terminate()
 }

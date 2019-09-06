@@ -13,7 +13,6 @@ var graphqlviz = require('./')
 var cli = meow(
   `
     Options:
-      -g --graphql    use graphql schema language as input
       -t --theme      path to theme overrides
       --print-theme   print default theme to stdout
       -v --verbose    print introspection result
@@ -28,7 +27,7 @@ var cli = meow(
       $ graphqlviz https://example.com/graphql -a "Bearer xxxxx" | dot -Tpng -o graph.png
       $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview
       $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
-      $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview
+      $ graphqlviz path/to/schema.graphql | dot -Tpng | open -f -a Preview
       $ graphqlviz --print-theme > theme.json
       $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview
       $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png
@@ -162,14 +161,18 @@ if (cli.input[0] === 'query') {
       return terminate()
     }
     var returnedPromise
-    if (cli.flags.graphql) {
-      returnedPromise = introspect(text)
-    } else {
+    const first = text.match(/[^\s]/)
+    if (!first) {
+      throw new Error('No text to parse')
+    }
+    if (first[0] === "{") {
       try {
         returnedPromise = Promise.resolve(JSON.parse(text))
       } catch (e) {
         fatal(e, text)
       }
+    } else {
+      returnedPromise = introspect(text)
     }
     return returnedPromise
   })

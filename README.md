@@ -14,7 +14,6 @@ $ npm install -g graphqlviz
 GraphQL Server CLI visualizer
 
 Options:
-  -g, --graphql    use graphql schema language as input
   -t, --theme      path to theme overrides
   --print-theme    prints default theme to stdout
   --verbose        print introspection result
@@ -29,7 +28,7 @@ Examples
   $ graphqlviz https://localhost:3000 -a "Bearer xxxxx" | dot -Tpng -o graph.png
   $ graphqlviz https://swapi.apis.guru | dot -Tpng | open -f -a Preview
   $ graphqlviz path/to/schema.json | dot -Tpng | open -f -a Preview
-  $ graphqlviz path/to/schema.graphql -g | dot -Tpng | open -f -a Preview
+  $ graphqlviz path/to/schema.graphql | dot -Tpng | open -f -a Preview
   $ graphqlviz --print-theme > theme.json
   $ graphqlviz https://localhost:3000 -t theme.json | dot -Tpng | open -f -a Preview
   $ graphqlviz schema.json --theme.header.invert=true | dot -Tpng > schema.png

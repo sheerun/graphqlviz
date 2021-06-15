@@ -1,3 +1,12 @@
+# 3.0.1
+
+- Updated dependencies for library vulnerabilities.
+
+# 3.0.0
+
+- Drop support for node earlier than 6.0
+- Updated dependencies and format.
+
 # 2.1.0
 
 - Allow for auth header

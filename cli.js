@@ -108,6 +108,7 @@ if (cli.input[0] === 'query') {
     // stdin
     p = getStdin().then(function (stdin) {
       if (stdin.trim() === '') {
+        console.error('ERROR: When run without a TTY; data must be provided in stdin')
         return terminate()
       }
       return stdin

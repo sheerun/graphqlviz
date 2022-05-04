@@ -1,6 +1,6 @@
 {
   "name": "graphqlviz",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "GraphQL Server CLI visualizer",
   "license": "MIT",
   "repository": "https://github.com/sheerun/graphqlviz.git",
@@ -28,14 +28,20 @@
     "graphql"
   ],
   "dependencies": {
-    "cross-fetch": "^3.0.1",
-    "get-stdin": "^6.0.0",
-    "graphql": "^14.1.1",
-    "lodash": "^4.17.11",
-    "meow": "^5.0.0"
+    "cross-fetch": "^3.1.4",
+    "get-stdin": "^9.0.0",
+    "graphql": "^14.7.0",
+    "lodash": "^4.17.21",
+    "meow": "^10.0.1"
   },
   "devDependencies": {
-    "ava": "^1.2.1",
-    "prettier-standard": "^9.1.1"
+    "ava": "^3.15.0",
+    "@ava/babel": "^1.0.1",
+    "prettier-standard": "^16.4.1"
+  },
+  "ava": {
+    "babel": true,
+    "verbose": true,
+    "timeout": "1m"
   }
 }

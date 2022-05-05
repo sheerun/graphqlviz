@@ -1,4 +1,4 @@
-# 4.0.0
+# 4.0.1
 
 - Updated dependencies for library vulnerabilities
 - Drop support for node earlier than 10.0

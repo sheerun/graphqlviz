@@ -5,9 +5,6 @@ var meow = require('meow')
 var fs = require('fs')
 var getStdin = require('get-stdin')
 var GraphQL = require('graphql')
-var graphql = GraphQL.graphql
-var parse = GraphQL.parse
-var buildASTSchema = GraphQL.buildASTSchema
 var graphqlviz = require('./')
 
 var cli = meow(
@@ -71,6 +68,7 @@ function fatal (e, text) {
 
   if (cli.flags.verbose) {
     console.error(text)
+    console.error(e.stack)
   }
 
   process.exit(1)
@@ -80,9 +78,9 @@ function fatal (e, text) {
 function introspect (text) {
   return new Promise(function (resolve, reject) {
     try {
-      var astDocument = parse(text)
-      var schema = buildASTSchema(astDocument)
-      graphql(schema, graphqlviz.query)
+      var astDocument = GraphQL.parse(text)
+      var schema = GraphQL.buildASTSchema(astDocument)
+      GraphQL.graphql({ schema, source: graphqlviz.query })
         .then(function (data) {
           resolve(data)
         })

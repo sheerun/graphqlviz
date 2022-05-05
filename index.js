@@ -4,7 +4,7 @@
 var _ = require('lodash')
 var graphql = require('graphql')
 
-module.exports.query = graphql.introspectionQuery
+module.exports.query = graphql.getIntrospectionQuery()
 module.exports.theme = {
   header: {
     invert: false

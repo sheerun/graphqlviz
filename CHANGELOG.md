@@ -1,3 +1,8 @@
+# 4.0.0
+
+- Updated dependencies for library vulnerabilities
+- Drop support for node earlier than 10.0
+
 # 3.0.1
 
 - Updated dependencies for library vulnerabilities.

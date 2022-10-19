@@ -44,7 +44,7 @@ You can print default theme with `graphqlviz --print-theme > theme.json`, then y
 
 Windows users looking use the `dot` command should download & install from the [graphviz website](https://graphviz.gitlab.io/_pages/Download/Download_windows.html) and ensure the installation location is on the system `PATH`. It has been reported that, for at least some windows versions, the `msi` does not automatically add the installation to the `PATH`. Alternatively the executables can be invoked directly. The installation location will likely be similar to `C:\Program Files (x86)\Graphviz2.38\bin\`.
 
-## Mac Userrs
+## Mac Users
 
 Mac users can install the `dot` command as part of [graphviz](https://www.graphviz.org) (from AT&T and Bell Labs) by running:
 
